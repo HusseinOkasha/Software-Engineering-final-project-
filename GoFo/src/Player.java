@@ -51,7 +51,56 @@ public class Player {
     public void bookPlayground (){
 
     }
+    public void setBalance(double balance){
+        this.balance= balance;
+    }
+    public String getName(){
+        return name;
+    }
+    public int getID(){
+        return ID;
+    }
+    public String getPassword(){
+        return this.Password;
+    }
+    public String getEmail(){
+        return  this.email;
+    }
+    public ArrayList<String> getNotifications(){
+        return this.notifications;
+    }
+    public Team getTeam(){
+        return this.team;
+    }
 
+    public ArrayList<Booking> getBookings() {
+        return bookings;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+    public void cancelBooking (Booking booking ){
+
+    }
+    public void viewAvailablePlaygrounds(){
+
+    }
+    public void filterPlaygroundsByArea(){
+
+    }
+    public  void filterPlaygroundsByDataAndTime(){
+
+    }
+    public void filterPlaygroundsByPrice(){
+
+    }
+    public void payBooking(Booking booking){
+
+    }
+    public void sendInvitations(){
+        
+    }
 
 
 }

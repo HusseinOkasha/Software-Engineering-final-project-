@@ -2,10 +2,12 @@ import java.util.ArrayList;
 
 public class Database {
     // attributes....
-    private static  ArrayList<Player> players;
-    private static  ArrayList<Playground>playgrounds;
-    private static  ArrayList<PlaygroundOwner>playgroundOwners;
-    private static  ArrayList<Administrator>administrators;
+    public static  ArrayList<Player> players;
+    public static  ArrayList<Playground>playgrounds;
+    public static  ArrayList<PlaygroundOwner>playgroundOwners;
+    public static  ArrayList<Administrator>administrators;
+
+
     // methods...
     public Database (){
         players= new ArrayList<Player>();
