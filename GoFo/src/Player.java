@@ -1,4 +1,6 @@
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player {
     // Attributes....
@@ -24,6 +26,16 @@ public class Player {
             database.AddPlayer(this);
 
     }
+    public Player(){
+        name= null;
+        ID=-1;
+        Password=null;
+        email=null;
+        notifications= null;
+        team= null;
+        bookings= null;
+        balance=0.0;
+    }
     //setters...
 
     public void setName(String name) {
@@ -46,7 +58,8 @@ public class Player {
         }
     }
     public void createTeam(){
-       //  this.team.addPlayer();
+         team = new Team();
+         //team.addPlayers();
     }
     public void bookPlayground (){
 
@@ -84,15 +97,58 @@ public class Player {
 
     }
     public void viewAvailablePlaygrounds(){
+        for (int i=0; i< database.playgrounds.size();i++){
+            if (Database.playgrounds.get(i).isAvailable()){
+                    System.out.println(Database.playgrounds.get(i));
+            }
+        }
+    }
+    public ArrayList<Playground> filterPlaygroundsByGovernorate(){
+        String governorate;
+        Scanner scanner = new Scanner(System.in);
+        governorate= scanner.nextLine();
+        ArrayList<Playground>filterResult= new ArrayList<Playground>();
+        for (int i=0; i< database.playgrounds.size();i++){
+            if (Database.playgrounds.get(i).getLocation().getGovernorate().equals(governorate)){
+                filterResult.add(Database.playgrounds.get(i));
+            }
+        }
+        scanner.close();
+        return filterResult;
+    }
+
+    public ArrayList<Playground> filterPlaygroundsByCity(){
+        String city;
+        Scanner scanner = new Scanner(System.in);
+        city= scanner.nextLine();
+        ArrayList<Playground>filterResult= new ArrayList<Playground>();
+        for (int i=0; i< database.playgrounds.size();i++){
+            if (Database.playgrounds.get(i).getLocation().getGovernorate().equals(city)){
+                filterResult.add(Database.playgrounds.get(i));
+            }
+        }
+        scanner.close();
+        return filterResult;
+    }
+
+    public ArrayList<Playground> filterPlaygroundsByStreet(){
+        String street;
+        Scanner scanner = new Scanner(System.in);
+        street= scanner.nextLine();
+        ArrayList<Playground>filterResult= new ArrayList<Playground>();
+        for (int i=0; i< database.playgrounds.size();i++){
+            if (Database.playgrounds.get(i).getLocation().getGovernorate().equals(street)){
+                filterResult.add(Database.playgrounds.get(i));
+            }
+        }
+        scanner.close();
+        return filterResult;
+    }
+
+    public  ArrayList<Playground> filterPlaygroundsByDataAndTime(){
 
     }
-    public void filterPlaygroundsByArea(){
-
-    }
-    public  void filterPlaygroundsByDataAndTime(){
-
-    }
-    public void filterPlaygroundsByPrice(){
+    public ArrayList<Playground> filterPlaygroundsByPrice(){
 
     }
     public void payBooking(Booking booking){
