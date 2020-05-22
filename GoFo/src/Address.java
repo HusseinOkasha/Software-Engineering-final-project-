@@ -52,7 +52,9 @@ public class Address {
            System.out.println("Enter governorate: ");
            Scanner scanner = new Scanner(System.in);
            String governorate =scanner.nextLine();
+           System.out.println("Enter city: ");
            String city = scanner.nextLine();
+           System.out.println("Enter street: ");
            String street = scanner.nextLine();
            setGovernorate(governorate);
            setCity(city);

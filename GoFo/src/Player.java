@@ -105,6 +105,7 @@ public class Player {
     }
     public ArrayList<Playground> filterPlaygroundsByGovernorate(){
         String governorate;
+        System.out.println("Enter governorate name : ");
         Scanner scanner = new Scanner(System.in);
         governorate= scanner.nextLine();
         ArrayList<Playground>filterResult= new ArrayList<Playground>();
@@ -119,11 +120,12 @@ public class Player {
 
     public ArrayList<Playground> filterPlaygroundsByCity(){
         String city;
+        System.out.println("Enter city name : ");
         Scanner scanner = new Scanner(System.in);
         city= scanner.nextLine();
         ArrayList<Playground>filterResult= new ArrayList<Playground>();
         for (int i=0; i< database.playgrounds.size();i++){
-            if (Database.playgrounds.get(i).getLocation().getGovernorate().equals(city)){
+            if (Database.playgrounds.get(i).getLocation().getCity().equals(city)){
                 filterResult.add(Database.playgrounds.get(i));
             }
         }
@@ -133,11 +135,12 @@ public class Player {
 
     public ArrayList<Playground> filterPlaygroundsByStreet(){
         String street;
+        System.out.println("Enter street name : ");
         Scanner scanner = new Scanner(System.in);
         street= scanner.nextLine();
         ArrayList<Playground>filterResult= new ArrayList<Playground>();
         for (int i=0; i< database.playgrounds.size();i++){
-            if (Database.playgrounds.get(i).getLocation().getGovernorate().equals(street)){
+            if (Database.playgrounds.get(i).getLocation().getStreet().equals(street)){
                 filterResult.add(Database.playgrounds.get(i));
             }
         }
@@ -146,10 +149,49 @@ public class Player {
     }
 
     public  ArrayList<Playground> filterPlaygroundsByDataAndTime(){
+            int day, month ,year , startHour , startMinute , startSecond ;
+            int endHour , endMinute , endSecond;
+            ArrayList<Playground>filteredPlaygrounds = new ArrayList<Playground>();
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter day: ");
+            day =scanner.nextInt();
+            System.out.println("Enter month: ");
+            month =scanner.nextInt();
+            System.out.println("Enter year: ");
+            year =scanner.nextInt();
+            System.out.println("Enter start hour: ");
+            startHour=scanner.nextInt();
+            System.out.println("Enter start minute: ");
+            startMinute= scanner.nextInt();
+            System.out.println("Enter start second: ");
+            startSecond= scanner.nextInt();
+            System.out.println("Enter end hour: ");
+            endHour=scanner.nextInt();
+            System.out.println("Enter end minute: ");
+            endMinute= scanner.nextInt();
+            System.out.println("Enter end second: ");
+            endSecond= scanner.nextInt();
+            Interval searchInterval= new Interval(startHour,startMinute, startSecond , endHour ,endMinute,endSecond,day,month,year ,null);
 
+            for (int i=0; i<Database.playgrounds.size(); i++){
+                if (Database.playgrounds.get(i).getAvailableHours().contains(searchInterval)){
+                    filteredPlaygrounds.add(Database.playgrounds.get(i));
+                }
+            }
     }
     public ArrayList<Playground> filterPlaygroundsByPrice(){
-
+        double price;
+        System.out.println("Enter filter price: ");
+        Scanner scanner = new Scanner(System.in);
+        price= scanner.nextDouble();
+        ArrayList<Playground>filterResult= new ArrayList<Playground>();
+        for (int i=0; i< database.playgrounds.size();i++){
+            if (Database.playgrounds.get(i).getPricePerHour() <= price){
+                filterResult.add(Database.playgrounds.get(i));
+            }
+        }
+        scanner.close();
+        return filterResult;
     }
     public void payBooking(Booking booking){
 
