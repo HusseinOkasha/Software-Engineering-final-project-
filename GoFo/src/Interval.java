@@ -23,13 +23,13 @@ public class Interval {
 
     }
     public Interval(){
-        startHour=-1;
-        startMinute=-1;
-        endHour=-1;
-        endMinute=-1;
-        day=-1;
-        year=-1;
-        month=-1;
+        startHour=0;
+        startMinute=0;
+        endHour=0;
+        endMinute=0;
+        day=0;
+        year=0;
+        month=0;
         booking= null;
     }
 
@@ -98,6 +98,9 @@ public class Interval {
 
     public Booking getBooking() {
         return booking;
+    }
+    public double calculateTotalTime(){
+        return 1.0;
     }
 
     /*

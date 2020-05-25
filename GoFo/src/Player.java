@@ -160,21 +160,18 @@ public class Player {
             startHour=scanner.nextInt();
             System.out.println("Enter start minute: ");
             startMinute= scanner.nextInt();
-            System.out.println("Enter start second: ");
-            startSecond= scanner.nextInt();
             System.out.println("Enter end hour: ");
             endHour=scanner.nextInt();
             System.out.println("Enter end minute: ");
             endMinute= scanner.nextInt();
-            System.out.println("Enter end second: ");
-            endSecond= scanner.nextInt();
-            Interval searchInterval= new Interval(startHour,startMinute, startSecond , endHour ,endMinute,endSecond,day,month,year ,null);
+            Interval searchInterval= new Interval(startHour,startMinute endHour ,endMinute,day,month,year ,null);
 
             for (int i=0; i<Database.playgrounds.size(); i++){
                 if (Database.playgrounds.get(i).getAvailableHours().contains(searchInterval)){
                     filteredPlaygrounds.add(Database.playgrounds.get(i));
                 }
             }
+            scanner.close();
     }
     public ArrayList<Playground> filterPlaygroundsByPrice(){
         double price;
@@ -220,8 +217,9 @@ public class Player {
                 Interval bookedInterval= new Interval();
                 bookedInterval.fill();
                 price=Database.playgrounds.get(index).getPricePerHour();
-                // calculate the price....
+                price*=bookedInterval.calculateTotalTime();
                 Booking  booking= new Booking(this,bookedInterval,price);
+                bookedInterval.setBooking(booking);
                 Database.playgrounds.get(index).addBooking(booking);
                 Database.playgrounds.get(index).removeInterval(bookedInterval);
 
