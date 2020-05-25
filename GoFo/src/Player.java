@@ -1,3 +1,5 @@
+import com.sun.source.tree.LambdaExpressionTree;
+
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -61,9 +63,6 @@ public class Player {
          team = new Team();
          //team.addPlayers();
     }
-    public void bookPlayground (){
-
-    }
     public void setBalance(double balance){
         this.balance= balance;
     }
@@ -93,13 +92,11 @@ public class Player {
     public double getBalance() {
         return balance;
     }
-    public void cancelBooking (Booking booking ){
 
-    }
     public void viewAvailablePlaygrounds(){
         for (int i=0; i< database.playgrounds.size();i++){
             if (Database.playgrounds.get(i).isAvailable()){
-                    System.out.println(Database.playgrounds.get(i));
+                    System.out.println( i+1 +" "+Database.playgrounds.get(i));
             }
         }
     }
@@ -197,8 +194,59 @@ public class Player {
 
     }
     public void sendInvitations(){
-        
+        System.out.println("Email: ");
+        Scanner scanner = new Scanner(System.in);
+        String email = scanner.nextLine();
+        Player player= Database.findPlayer(email);
+        if (player!=null){
+            player.addNotification("Your friend "+this.name+ " send you an invitation" );
+        }
     }
+    public void bookPlayground (){
+
+        System.out.println("Choose a playground to book: ");
+        viewAvailablePlaygrounds();
+        System.out.print("Enter the number of the playground you want to book: ");
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine();
+        double price ;
+        try {
+            int index= Integer.parseInt(choice);
+            if (index < Database.playgrounds.size() ){
+                ArrayList<Interval>availableHours=Database.playgrounds.get(index).getAvailableHours();
+                for (int i=0; i< availableHours.size(); i++){
+                    System.out.println("1- "+availableHours.get(i));
+                }
+                Interval bookedInterval= new Interval();
+                bookedInterval.fill();
+                price=Database.playgrounds.get(index).getPricePerHour();
+                // calculate the price....
+                Booking  booking= new Booking(this,bookedInterval,price);
+                Database.playgrounds.get(index).addBooking(booking);
+                Database.playgrounds.get(index).removeInterval(bookedInterval);
+
+            }
+            else {
+                throw  new NumberFormatException ();
+            }
+        }
+        catch (NumberFormatException e){
+            System.out.println("Invalid choice if you want to retry press y ");
+            System.out.println("================================================");
+            choice= scanner.nextLine();
+            if (choice.equalsIgnoreCase("y")){
+                bookPlayground();
+            }
+        }
+
+    }
+    public void cancelBooking (Booking booking ){
+
+    }
+    public int isValidIndex(String index , int size ){
+        if
+    }
+
 
 
 }

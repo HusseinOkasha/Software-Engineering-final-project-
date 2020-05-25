@@ -126,6 +126,47 @@ public class Playground {
     boolean isAvailable(){
         return true ;
     }
+    void addBooking(Booking booking){
+        bookings.add(booking);
+    }
+    void removeInterval(Interval interval){
+        for (int i=0; i<availableHours.size();i++){
+            if (interval.getYear()== availableHours.get(i).getYear()){
+                if (interval.getMonth() ==  availableHours.get(i).getMonth() ){
+                    if(interval.getDay() ==  availableHours.get(i).getDay() ){
+                         if(interval.getStartHour() > availableHours.get(i).getStartHour() ){
+                             if (interval.getEndHour() < availableHours.get(i).getEndHour()){
+                                    int endHour=availableHours.get(i).getEndHour();
+                                    int endMinute= availableHours.get(i).getEndMinute();
+                                    availableHours.get(i).setEndHour(interval.getEndHour());
+                                    availableHours.get(i).setEndMinute(interval.getEndMinute());
+                                    Interval newInterval= new Interval (interval.getStartHour(), interval.getStartMinute() , interval.getEndHour() , interval.getEndMinute(),
+                                    interval.getDay(), interval.getMonth() , interval.getYear(), null);
+                                    availableHours.add(newInterval);
+                             }
+                             else if (interval.getEndHour() == availableHours.get(i).getEndHour()){
+                                     availableHours.get(i).setEndHour(interval.getStartHour());
+                                     availableHours.get(i).setEndMinute(interval.getEndMinute());
+                             }
+
+                         }
+                         else if (interval.getStartHour() == availableHours.get(i).getStartHour() ){
+                                  if (interval.getEndHour() < availableHours.get(i).getEndHour() ){
+                                      Interval newInterval = new Interval(interval.getEndHour() , interval.getEndMinute(),
+                                              availableHours.get(i).getEndHour(), availableHours.get(i).getEndMinute(),interval.getDay(),
+                                              interval.getMonth(), interval.getMonth(), null);
+                                      availableHours.add(newInterval);
+                                  }
+                                  else if (interval.getEndHour()==availableHours.get(i).getEndHour()){
+                                      availableHours.remove(i);
+                                  }
+
+                         }
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public String toString() {
