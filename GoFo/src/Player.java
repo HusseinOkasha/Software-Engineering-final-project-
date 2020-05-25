@@ -187,7 +187,12 @@ public class Player {
         scanner.close();
         return filterResult;
     }
-    public void payBooking(Booking booking){
+    public boolean payBooking(Booking booking){
+            if (balance >= booking.getPrice()){
+                balance-= booking.getPrice();
+                return true;
+            }
+            return false;
 
     }
     public void sendInvitations(){
@@ -220,8 +225,14 @@ public class Player {
                 price*=bookedInterval.calculateTotalTime();
                 Booking  booking= new Booking(this,bookedInterval,price);
                 bookedInterval.setBooking(booking);
-                Database.playgrounds.get(index).addBooking(booking);
-                Database.playgrounds.get(index).removeInterval(bookedInterval);
+                if (payBooking(booking)){
+                    Database.playgrounds.get(index).addBooking(booking);
+                    Database.playgrounds.get(index).removeInterval(bookedInterval);
+                    this.bookings.add(booking);
+                }
+                else{
+                    System.out.println("You don't have enough credit....");
+                }
 
             }
             else {
@@ -239,10 +250,17 @@ public class Player {
 
     }
     public void cancelBooking (Booking booking ){
+          if (booking.getFreeCancellation()==true){
+              balance+=booking.getPrice();
+          }
+          else{
+              System.out.println("the free cancellation period has been passed so you can't take back your money");
+          }
+          // remove the booking from plagground ...
+          // add the booked slot to the avalaible playgrounds.
+          this.bookings.remove(booking);
 
-    }
-    public int isValidIndex(String index , int size ){
-        if
+
     }
 
 
