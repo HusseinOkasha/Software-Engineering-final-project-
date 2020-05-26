@@ -122,6 +122,11 @@ public class PlaygroundOwner {
            Scanner scanner = new Scanner(System.in);
            this.mobile = scanner.nextInt();
     }
+    public void addPlayground(){
+           Playground playground = new Playground();
+           playground.fill();
+           this.playgrounds.add(playground);
+    }
 
 
 
