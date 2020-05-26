@@ -12,6 +12,11 @@ public class Address {
         this.city=city;
         this.street= street;
     }
+    public Address(){
+        this.governorate="";
+        this.city="";
+        this.street="";
+    }
 
     // setters...
     public void setCity(String city) {
@@ -59,5 +64,6 @@ public class Address {
            setGovernorate(governorate);
            setCity(city);
            setStreet(street);
+           scanner.close();
     }
 }

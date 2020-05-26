@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PlaygroundOwner {
     // Attributes...
@@ -112,5 +113,15 @@ public class PlaygroundOwner {
     public String getPassword() {
         return password;
     }
+
+    // methods
+    public  void createProfile(){
+           this.location= new Address();
+           location.createAddress();
+           System.out.println("Enter your mobile number: ");
+           Scanner scanner = new Scanner(System.in);
+           this.mobile = scanner.nextInt();
+    }
+
 
 }
