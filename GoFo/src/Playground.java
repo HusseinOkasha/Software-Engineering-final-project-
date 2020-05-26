@@ -167,6 +167,17 @@ public class Playground {
             }
         }
     }
+    public  void addAvailableInterval(Interval interval){
+           availableHours.add(interval);
+    }
+    public void  removeBooking(Booking booking){
+        for (int i=0; i<bookings.size();i++){
+            if (booking==bookings.get(i)){
+                bookings.remove(booking);
+            }
+        }
+    }
+
 
     @Override
     public String toString() {

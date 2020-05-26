@@ -1,6 +1,4 @@
-import com.sun.source.tree.LambdaExpressionTree;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -256,13 +254,15 @@ public class Player {
           else{
               System.out.println("the free cancellation period has been passed so you can't take back your money");
           }
-          // remove the booking from plagground ...
-          // add the booked slot to the avalaible playgrounds.
+          for (int i=0;i<Database.playgrounds.size() ;i++){
+              if (Database.playgrounds.get(i)== booking.getBookedPlayground()){
+                  Database.playgrounds.get(i).addAvailableInterval(booking.getBookedInterval());
+                  Database.playgrounds.get(i).removeBooking(booking);
+              }
+          }
           this.bookings.remove(booking);
 
-
     }
-
 
 
 }
