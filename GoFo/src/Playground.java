@@ -121,7 +121,10 @@ public class Playground {
     }
 
     boolean isCompleteData(){
-        return true ;
+        if (name!="" && location!=null && description!="" && bookingNumber>0 && pricePerHour>=0   ){
+            return  true;
+        }
+        return false;
     }
     boolean isAvailable(){
         if (availableHours.size()>0){
