@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Playground {
 
@@ -184,7 +185,23 @@ public class Playground {
         }
     }
 
+    public  void fill (){
+        Scanner scanner = new Scanner(System.in)
+        System.out.println("Name: ");
+        this.name=scanner.nextLine();
+        this.location= new Address();
+        this.location.createAddress();
+        this.description=scanner.nextLine();
+        this.bookingNumber= scanner.nextInt();
+        this.pricePerHour= scanner.nextDouble();
+        this.link= scanner.nextLine();
+        System.out.println("Number of images: ");
+        int numberOfImages = scanner.nextInt();
+        for (int i=0; i<numberOfImages ;i++){
+            this.images.add(scanner.nextLine());
+        }
 
+    }
     @Override
     public String toString() {
         return "Playground{" +
