@@ -18,8 +18,33 @@ public class Playground {
     private PlaygroundOwner owner;
 
     // methods...
-    Playground (String name , String location , String description , int bookingNumber , double pricePerHour , String link ,ArrayList<String>images , boolean approved , boolean suspended , ArrayList<Booking>bookings , ArrayList<Interval>availableHours , PlaygroundOwner owner){
-
+    Playground (String name , Address location , String description , int bookingNumber , double pricePerHour , String link ,ArrayList<String>images , boolean approved , boolean suspended , ArrayList<Booking>bookings , ArrayList<Interval>availableHours , PlaygroundOwner owner) {
+            this.name =name;
+            this.location=location;
+            this.description=description;
+            this.bookingNumber=bookingNumber;
+            this.pricePerHour=pricePerHour;
+            this.link=link;
+            this.images=images;
+            this.approved=approved;
+            this.suspended=suspended;
+            this.bookings=bookings;
+            this.availableHours=availableHours;
+            this.owner=owner;
+    }
+    Playground(){
+        this.name ="";
+        this.location=null;
+        this.description=null;
+        this.bookingNumber=0;
+        this.pricePerHour=0;
+        this.link="";
+        this.images=null;
+        this.approved=false;
+        this.suspended=true;
+        this.bookings=null;
+        this.availableHours=null;
+        this.owner=null;
     }
 
     //setters...
