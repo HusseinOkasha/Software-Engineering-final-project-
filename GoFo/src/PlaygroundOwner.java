@@ -125,7 +125,9 @@ public class PlaygroundOwner {
     public void addPlayground(){
            Playground playground = new Playground();
            playground.fill();
+           playground.setApproved(false);
            this.playgrounds.add(playground);
+           Database.pendingPlaygrounds.add(playground);
 
     }
     public void updatePlayground(){
