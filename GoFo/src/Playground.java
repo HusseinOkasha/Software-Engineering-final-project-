@@ -211,20 +211,35 @@ public class Playground {
     }
 
     public  void fill (){
-        Scanner scanner = new Scanner(System.in)
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Name: ");
         this.name=scanner.nextLine();
         this.location= new Address();
         this.location.createAddress();
+        System.out.print("Description: ");
         this.description=scanner.nextLine();
+        System.out.print("Booking Number: ");
         this.bookingNumber= scanner.nextInt();
+        System.out.print("Price per hour: ");
         this.pricePerHour= scanner.nextDouble();
+        System.out.print("website Link: ");
         this.link= scanner.nextLine();
-        System.out.println("Number of images: ");
+        System.out.print("Number of images: ");
         int numberOfImages = scanner.nextInt();
         for (int i=0; i<numberOfImages ;i++){
+            System.out.print("Image path: ");
             this.images.add(scanner.nextLine());
         }
+        int numberOfIntervals=0;
+        System.out.print("Number of interval you want to add");
+        numberOfIntervals= scanner.nextInt();
+        for (int i=0; i<numberOfIntervals ;i++){
+            System.out.print("interval number "+ i +1 );
+            Interval newInterval = new Interval();
+            newInterval.fill();
+            availableHours.add(newInterval);
+        }
+        scanner.close();
 
     }
     @Override

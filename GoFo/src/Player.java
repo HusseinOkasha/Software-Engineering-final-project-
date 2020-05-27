@@ -162,7 +162,7 @@ public class Player {
             endHour=scanner.nextInt();
             System.out.println("Enter end minute: ");
             endMinute= scanner.nextInt();
-            Interval searchInterval= new Interval(startHour,startMinute endHour ,endMinute,day,month,year ,null);
+            Interval searchInterval= new Interval(startHour,startMinute, endHour ,endMinute,day,month,year ,null);
 
             for (int i=0; i<Database.playgrounds.size(); i++){
                 if (Database.playgrounds.get(i).getAvailableHours().contains(searchInterval)){
@@ -170,6 +170,8 @@ public class Player {
                 }
             }
             scanner.close();
+            return filteredPlaygrounds;
+
     }
     public ArrayList<Playground> filterPlaygroundsByPrice(){
         double price;
@@ -269,5 +271,7 @@ public class Player {
 class Main{
     public static void main(String args[]){
         Player player = new Player("Hussein Okasha" , 123 , "kk%lll" , "husseinokasha13@gmail.com",null, null,null,2000);
+
     }
+
 }

@@ -126,6 +126,41 @@ public class PlaygroundOwner {
            Playground playground = new Playground();
            playground.fill();
            this.playgrounds.add(playground);
+
+    }
+    public void updatePlayground(){
+           for (int i=0; i<playgrounds.size() ;i++){
+               System.out.println(i+1+"- "+playgrounds.get(i));
+           }
+           System.out.println("=============================================");
+           System.out.println("enter the number of the playground you want to edit ");
+           Scanner scanner = new Scanner(System.in);
+           String choice = scanner.nextLine();
+           try {
+               int index = Integer.parseInt(choice);
+               if (index < 0 || index >= playgrounds.size() ){
+                   throw  new NumberFormatException ();
+               }
+               else{
+                   playgrounds.get(index).fill();
+               }
+           }
+           catch (NumberFormatException e){
+               System.out.println("Invalid choice press y to retry");
+               choice= scanner.next();
+               if (choice.equalsIgnoreCase("Y")){
+                   updatePlayground();
+               }
+           }
+
+    }
+    public void viewBookings (){
+           for (int i=0; i<playgrounds.size(); i++){
+               ArrayList<Booking>bookings=playgrounds.get(i).getBookings();
+               for (int j=0; j<bookings.size();j++ ){
+                   System.out.print(bookings.get(j));
+               }
+           }
     }
 
 
