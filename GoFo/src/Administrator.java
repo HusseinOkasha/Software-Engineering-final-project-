@@ -63,7 +63,7 @@ public class Administrator {
     }
 
     // methods...
-    void approvePlayground(Playground pendingPlayground ){
+    public void approvePlayground(Playground pendingPlayground ){
         System.out.print(pendingPlayground);
         System.out.print("===================");
         System.out.print("Is ok...? y / n");
@@ -77,15 +77,38 @@ public class Administrator {
         }
 
     }
-    void suspendPlayground(Playground playground ){
+    public void suspendPlayground(Playground playground ){
         playground.setSuspended(true);
     }
-    void activatePlayground(Playground playground){
+    public void activatePlayground(Playground playground){
         playground.setSuspended(false);
     }
-
-
-
-
+    public void deletePlayground(){
+        for (int i=0; i<Database.playgrounds.size();i++){
+            System.out.print(Database.playgrounds.get(i));
+        }
+        System.out.print("=============================================================");
+        System.out.print("enter number of the playground you want to delete");
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+        try{
+            int index = Integer.parseInt(choice);
+            if (index<0 && index >= Database.playgrounds.size()){
+                throw  new NumberFormatException();
+            }
+            else {
+                Database.playgrounds.remove(index);
+            }
+        }
+        catch (NumberFormatException e){
+            System.out.print("Invalid choice enter y to retry");
+            choice=scanner.next();
+            if (choice.equalsIgnoreCase("Y")){
+                deletePlayground();
+            }
+        }
+        scanner.close();
+    }
 
 }
+
