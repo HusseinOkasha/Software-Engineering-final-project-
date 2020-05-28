@@ -40,7 +40,7 @@ public class Database {
     void removePlayer(Player player ){
         for(int i=0; i<players.size() ; i++){
             if(players.get(i)==player){
-                palyers.remove(i);
+                players.remove(i);
             }
         }
     }
@@ -56,15 +56,15 @@ public class Database {
                 administrators.remove(i);}
         }
     }
-    player findPlayer(String email){
+    Player findPlayer(String email){
         for(int i=0 ; i<players.size() ; i++){
-            if(players.get(i).email==email){
-                System.out.println(players.get(i));
+            if(players.get(i).getEmail()==email){
+                return players.get(i);
             }
         }
-        
+        return null;
     }
-    }
+}
     
 
 
