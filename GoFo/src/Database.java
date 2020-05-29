@@ -6,8 +6,6 @@ public class Database {
     public static  ArrayList<Playground>playgrounds;
     public static  ArrayList<PlaygroundOwner>playgroundOwners;
     public static  ArrayList<Administrator>administrators;
-
-
     // methods...
     public Database (){
         players= new ArrayList<Player>();
@@ -29,41 +27,24 @@ public class Database {
     }
     // add functions to remove also ....
     void removePlaygroundOwner(PlaygroundOwner playgroundOwner){
-        for(int i=0; i<playgroundOwners.size() ; i++){
-            if(playgroundOwners.get(i)==playgroundOwner){
-                playgroundOwners.remove(i);
-                
-                
-            }
-        }
-    }
+        playgroundOwners.remove(playgoundOwener);
+     }
     void removePlayer(Player player ){
-        for(int i=0; i<players.size() ; i++){
-            if(players.get(i)==player){
-                palyers.remove(i);
-            }
-        }
+        players.remove(player);
     }
     void removePlaygroud(Playground playground){
-        for(int i=0; i<playgrounds.size() ; i++){
-            if(playgrounds.get(i)==playground){
-               playgrounds.remove(i);} 
-        }
+        playgrounds.remove(playground);
     }
     void removeAdministrator(Administrator administrator){
-        for(int i=0; i<administrators.size() ; i++){
-            if(administrators.get(i)==administrator){
-                administrators.remove(i);}
-        }
+        administrators.remove(administrator);
     }
     player findPlayer(String email){
         for(int i=0 ; i<players.size() ; i++){
-            if(players.get(i).email==email){
-                System.out.println(players.get(i));
-            }
+            if(players.get(i).getEmail() .equalsignorecase(email)){ return players.get(i);}
         }
-        
+     return null;   
     }
+    
     }
     
 
