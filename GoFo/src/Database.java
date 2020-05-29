@@ -29,23 +29,22 @@ public class Database {
     void removePlaygroundOwner(PlaygroundOwner playgroundOwner){
         playgroundOwners.remove(playgoundOwener);
      }
-    void removePlayer(Player player ){
-        players.remove(player);
-    }
-    void removePlaygroud(Playground playground){
-        playgrounds.remove(playground);
-    }
+    void removePlayer(Player player ){players.remove(player); }
+
+
+    void removePlaygroud(Playground playground){playgrounds.remove(playground);}
+
+
     void removeAdministrator(Administrator administrator){
         administrators.remove(administrator);
     }
-    player findPlayer(String email){
+    Player findPlayer(String email){
         for(int i=0 ; i<players.size() ; i++){
             if(players.get(i).getEmail() .equalsignorecase(email)){ return players.get(i);}
         }
      return null;   
     }
-    
-    }
+
     
 
 
