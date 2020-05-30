@@ -13,10 +13,10 @@ public class Database {
         playgroundOwners = new ArrayList<PlaygroundOwner>();
         administrators = new ArrayList<Administrator>();
     }
-    void AddPlayer(Player player) {
+    void addPlayer(Player player) {
         players.add(player);
     }
-    void AddPlaygroundOwner(PlaygroundOwner playgroundOwner){
+    void addPlaygroundOwner(PlaygroundOwner playgroundOwner){
         playgroundOwners.add(playgroundOwner);
     }
     void addPlayground(Playground playground){
@@ -27,20 +27,24 @@ public class Database {
     }
     // add functions to remove also ....
     void removePlaygroundOwner(PlaygroundOwner playgroundOwner){
-        playgroundOwners.remove(playgoundOwener);
+        playgroundOwners.remove(playgroundOwner);
      }
-    void removePlayer(Player player ){players.remove(player); }
+    void removePlayer(Player player ){
+        players.remove(player);
+    }
 
-
-    void removePlaygroud(Playground playground){playgrounds.remove(playground);}
-
+    void removePlayground(Playground playground){
+        playgrounds.remove(playground);
+    }
 
     void removeAdministrator(Administrator administrator){
         administrators.remove(administrator);
     }
     Player findPlayer(String email){
         for(int i=0 ; i<players.size() ; i++){
-            if(players.get(i).getEmail() .equalsignorecase(email)){ return players.get(i);}
+            if(players.get(i).getEmail().equalsIgnoreCase(email)){
+                return players.get(i);
+            }
         }
      return null;   
     }

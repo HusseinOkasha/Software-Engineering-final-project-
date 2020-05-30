@@ -1,16 +1,13 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 public class Register {
-    //attributes....
-    public  Database static database;
 
 
     // methods...
     void registerAsPlayer(){
-        Scanner Playr = new Scanner(System.in);
-        Player player;
+        Scanner scanner = new Scanner(System.in);
+        Player player= new Player();
         System.out.println("enter the name");
-        String name = Playr.nextLine();
+        String name = scanner.nextLine();
         if(isCompleteString(name)==true){
             player.setName(name);
         }
@@ -19,7 +16,7 @@ public class Register {
             registerAsPlayer();
         }
         System.out.println("enter the ID");
-        int ID = Playr.nextINT;
+        int ID = scanner.nextInt();
         if(isCompleteINT(ID)==true){
             player.setID(ID);
         }
@@ -28,7 +25,7 @@ public class Register {
             registerAsPlayer();
         }
         System.out.println("enter the password");
-        String password = Playr.nextLine();
+        String password = scanner.nextLine();
         if(isCompleteString(name)==true ) {
             player.setPassword(password);
         }
@@ -37,7 +34,7 @@ public class Register {
             registerAsPlayer();
         }
         System.out.println("enter the e-mail");
-        String email = Playr.nextLine();
+        String email = scanner.nextLine();
         if(isCompleteString(name)==true){
             player.setEmail(email);
         }
@@ -45,13 +42,14 @@ public class Register {
             System.out.println("wrong input");
             registerAsPlayer();
         }
-        database.AddPlayer(player);
+        Database.players.add(player);
+        scanner.close();
     }
     void registerAsPlaygroundOwner(){
-        Scanner Owner = new Scanner(System.in);
-        PlaygroundOwner owner;
+        Scanner scanner = new Scanner(System.in);
+        PlaygroundOwner owner = new PlaygroundOwner() ;
         System.out.println("enter the name");
-        String name = Owner.nextLine();
+        String name = scanner.nextLine();
         if(isCompleteString(name)==true){
             owner.setName(name);
         }
@@ -60,7 +58,7 @@ public class Register {
             registerAsPlaygroundOwner();
         }
         System.out.println("enter the ID");
-        int ID =  Owner.nextINT;
+        int ID =  scanner.nextInt();
         if(isCompleteINT(ID)==true){
             owner.setID(ID);
         }
@@ -69,7 +67,7 @@ public class Register {
             registerAsPlaygroundOwner();
         }
         System.out.println("enter the password");
-        String password =  Owner.nextLine();
+        String password =  scanner.nextLine();
         if(isCompleteString(name)==true ) {
             owner.setPassword(password);
         }
@@ -78,7 +76,7 @@ public class Register {
             registerAsPlaygroundOwner();
         }
         System.out.println("enter the e-mail");
-        String email =  Owner.nextLine();
+        String email =  scanner.nextLine();
         if(isCompleteString(name)==true){
             owner.setEmail(email);
         }
@@ -86,61 +84,63 @@ public class Register {
             System.out.println("wrong input");
             registerAsPlaygroundOwner();
         }
-        database.AddPlaygroundOwner(owner);
+        Database.playgroundOwners.add(owner);
+        scanner.close();
     }
-    void registerAsAdminstartor(){
-        Scanner Admin = new Scanner(System.in);
-        Administrator admin;
+    void registerAsAdministrator(){
+        Scanner scanner = new Scanner(System.in);
+        Administrator admin = new Administrator();
         System.out.println("enter the name");
-        String name = Admin.nextLine();
+        String name = scanner.nextLine();
         if(isCompleteString(name)==true){
             admin.setName(name);
         }
         else{
             System.out.println("wrong input");
-            registerAsAdminstartor();
+            registerAsAdministrator();
         }
         System.out.println("enter the ID");
-        int ID = Admin.nextINT;
+        int ID = scanner.nextInt();
         if(isCompleteINT(ID)==true){
             admin.setID(ID);
         }
         else{
             System.out.println("wrong input");
-            registerAsAdminstartor();
+            registerAsAdministrator();
         }
         System.out.println("enter the password");
-        String password = Admin.nextLine();
+        String password = scanner.nextLine();
         if(isCompleteString(name)==true ) {
             admin.setPassword(password);
         }
         else{
             System.out.println("wrong input");
-            registerAsAdminstartor();
+            registerAsAdministrator();
         }
         System.out.println("enter the e-mail");
-        String email = Admin.nextLine();
+        String email = scanner.nextLine();
         if(isCompleteString(name)==true){
             admin.setEmail(email);
         }
         else{
             System.out.println("wrong input");
-            registerAsAdminstartor();
+            registerAsAdministrator();
         }
-        database.addAdministrator(admin);
+        Database.administrators.add(admin);
+        scanner.close();
     }
-    boolean isCompleteString(String string){
-        if(string.equals(null)){return false ;}
+    boolean isCompleteString(String input){
+        if(input.equalsIgnoreCase("")){return false ;}
         else {return true;}
     }
-    boolean isCompleteINT(int Int){
-        if(Int.equals(null)){return false;}
+    boolean isCompleteINT(int input){
+        if(input == -1){return false;}
         else {return true;}
     }
     void chooseRole(){
-        Scanner Role = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("enter your role");
-        int role = Role.nextINT;
+        int role = scanner.nextInt();
         if(role==1){
             registerAsPlayer();
         }
@@ -148,12 +148,13 @@ public class Register {
             registerAsPlaygroundOwner();
         }
         else if(role==3){
-            registerAsAdminstartor();
+            registerAsAdministrator();
         }
         else{
             System.out.println("invalid choice");
             chooseRole();
         }
+        scanner.close();
     }
 
 }
