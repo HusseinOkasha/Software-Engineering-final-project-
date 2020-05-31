@@ -40,7 +40,7 @@ public class Database {
     void removeAdministrator(Administrator administrator){
         administrators.remove(administrator);
     }
-    Player findPlayer(String email){
+    static Player findPlayer(String email){
         for(int i=0 ; i<players.size() ; i++){
             if(players.get(i).getEmail().equalsIgnoreCase(email)){
                 return players.get(i);
