@@ -205,48 +205,30 @@ public class Player {
             player.addNotification("Your friend "+this.name+ " send you an invitation" );
         }
     }
-    public void bookPlayground (){
+    public void bookPlayground (int index){
 
-        System.out.println("Choose a playground to book: ");
-        viewAvailablePlaygrounds();
-        System.out.print("Enter the number of the playground you want to book: ");
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine();
         double price ;
-        try {
-            int index= Integer.parseInt(choice);
-            if (index < Database.playgrounds.size() ){
-                ArrayList<Interval>availableHours=Database.playgrounds.get(index).getAvailableHours();
-                for (int i=0; i< availableHours.size(); i++){
-                    System.out.println("1- "+availableHours.get(i));
-                }
-                Interval bookedInterval= new Interval();
-                bookedInterval.fill();
-                price=Database.playgrounds.get(index).getPricePerHour();
-                price*=bookedInterval.calculateTotalTime();
-                Booking  booking= new Booking(this,bookedInterval,price);
-                bookedInterval.setBooking(booking);
-                if (payBooking(booking)){
-                    Database.playgrounds.get(index).addBooking(booking);
-                    Database.playgrounds.get(index).removeInterval(bookedInterval);
-                    this.bookings.add(booking);
-                }
-                else{
-                    System.out.println("You don't have enough credit....");
-                }
+        if (index < Database.playgrounds.size() ){
 
+            for (int i=0; i< Database.playgrounds.get(index).getAvailableHours().size(); i++){
+                    System.out.println(i+1+" "+Database.playgrounds.get(index).getAvailableHours().size());
             }
-            else {
-                throw  new NumberFormatException ();
+            Interval bookedInterval= new Interval();
+            bookedInterval.fill();
+            price=Database.playgrounds.get(index).getPricePerHour();
+            price*=bookedInterval.calculateTotalTime();
+            Booking  booking= new Booking(this,bookedInterval,price);
+            bookedInterval.setBooking(booking);
+            if (payBooking(booking)){
+                Database.playgrounds.get(index).addBooking(booking);
+                Database.playgrounds.get(index).removeInterval(bookedInterval);
+                this.bookings.add(booking);
+                System.out.print("Successful booking.");
             }
-        }
-        catch (NumberFormatException e){
-            System.out.println("Invalid choice if you want to retry press y ");
-            System.out.println("================================================");
-            choice= scanner.nextLine();
-            if (choice.equalsIgnoreCase("y")){
-                bookPlayground();
+            else{
+                System.out.println("You don't have enough credit....");
             }
+
         }
 
     }
@@ -280,10 +262,33 @@ public class Player {
             viewAvailablePlaygrounds();
         }
         else if (choice.equalsIgnoreCase("2")){
-            filterPlaygroundsByGovernorate(Database.playgrounds);
-            filterPlaygroundsByCity();
-            filterPlaygroundsByDataAndTime();
+            ArrayList<Integer>indices= new ArrayList<Integer>();
+            for (int i=0; i<Database.playgrounds.size(); i++ ){
+                indices.add(i);
+            }
+            indices=filterPlaygroundsByGovernorate(indices);
+            indices=filterPlaygroundsByCity(indices);
+            indices=filterPlaygroundsByDataAndTime(indices);
+            for (int i=0; i<indices.size();i++){
+                System.out.print(i+1+" "+Database.playgrounds.get(indices.get(i)));
+            }
+            System.out.print("Do you want to book one ..? y/n");
+            choice=scanner.next();
+            if (choice.equalsIgnoreCase("Y")){
+                System.out.print("enter the number of the playground: ");
+                choice=scanner.next();
+                try {
+                    int index = Integer.parseInt(choice);
+                    bookPlayground(indices.get(index-1));
+                }
+                catch (NumberFormatException e){
+                    System.out.print("Invalid choice.");
+                }
+
+            }
+
         }
+
 
 
     }
