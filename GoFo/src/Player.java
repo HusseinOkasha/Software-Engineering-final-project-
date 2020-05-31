@@ -1,4 +1,5 @@
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -98,55 +99,55 @@ public class Player {
             }
         }
     }
-    public ArrayList<Playground> filterPlaygroundsByGovernorate(){
+    public ArrayList<Integer> filterPlaygroundsByGovernorate(ArrayList<Integer>index){
         String governorate;
         System.out.println("Enter governorate name : ");
         Scanner scanner = new Scanner(System.in);
         governorate= scanner.nextLine();
-        ArrayList<Playground>filterResult= new ArrayList<Playground>();
-        for (int i=0; i< database.playgrounds.size();i++){
-            if (Database.playgrounds.get(i).getLocation().getGovernorate().equals(governorate)){
-                filterResult.add(Database.playgrounds.get(i));
+        ArrayList<Integer>filterResult= new ArrayList<Integer>();
+        for (int i=0; i< index.size();i++){
+            if (Database.playgrounds.get(index.get(i)).getLocation().getGovernorate().equals(governorate)){
+                filterResult.add(i);
             }
         }
         scanner.close();
         return filterResult;
     }
 
-    public ArrayList<Playground> filterPlaygroundsByCity(){
+    public ArrayList<Integer> filterPlaygroundsByCity(ArrayList<Integer>index){
         String city;
         System.out.println("Enter city name : ");
         Scanner scanner = new Scanner(System.in);
         city= scanner.nextLine();
-        ArrayList<Playground>filterResult= new ArrayList<Playground>();
-        for (int i=0; i< database.playgrounds.size();i++){
-            if (Database.playgrounds.get(i).getLocation().getCity().equals(city)){
-                filterResult.add(Database.playgrounds.get(i));
+        ArrayList<Integer>filterResult= new ArrayList<Integer>();
+        for (int i=0; i< index.size();i++){
+            if (Database.playgrounds.get(index.get(i)).getLocation().getCity().equals(city)){
+                filterResult.add(index.get(i));
             }
         }
         scanner.close();
         return filterResult;
     }
-
-    public ArrayList<Playground> filterPlaygroundsByStreet(){
+    /*
+    public ArrayList<Playground> filterPlaygroundsByStreet(ArrayList<Playground>playgrounds){
         String street;
         System.out.println("Enter street name : ");
         Scanner scanner = new Scanner(System.in);
         street= scanner.nextLine();
         ArrayList<Playground>filterResult= new ArrayList<Playground>();
-        for (int i=0; i< database.playgrounds.size();i++){
-            if (Database.playgrounds.get(i).getLocation().getStreet().equals(street)){
-                filterResult.add(Database.playgrounds.get(i));
+        for (int i=0; i< playgrounds.size();i++){
+            if (playgrounds.get(i).getLocation().getStreet().equals(street)){
+                filterResult.add(playgrounds.get(i));
             }
         }
         scanner.close();
         return filterResult;
     }
-
-    public  ArrayList<Playground> filterPlaygroundsByDataAndTime(){
+    */
+    public  ArrayList<Integer> filterPlaygroundsByDataAndTime(ArrayList<Integer>index){
             int day, month ,year , startHour , startMinute , startSecond ;
             int endHour , endMinute , endSecond;
-            ArrayList<Playground>filteredPlaygrounds = new ArrayList<Playground>();
+            ArrayList<Integer>filteredPlaygrounds = new ArrayList<Integer>();
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter day: ");
             day =scanner.nextInt();
@@ -164,24 +165,24 @@ public class Player {
             endMinute= scanner.nextInt();
             Interval searchInterval= new Interval(startHour,startMinute, endHour ,endMinute,day,month,year ,null);
 
-            for (int i=0; i<Database.playgrounds.size(); i++){
-                if (Database.playgrounds.get(i).getAvailableHours().contains(searchInterval)){
-                    filteredPlaygrounds.add(Database.playgrounds.get(i));
+            for (int i=0; i<index.size(); i++){
+                if (Database.playgrounds.get(index.get(i)).getAvailableHours().contains(searchInterval)){
+                    filteredPlaygrounds.add(index.get(i));
                 }
             }
             scanner.close();
             return filteredPlaygrounds;
 
     }
-    public ArrayList<Playground> filterPlaygroundsByPrice(){
+    public ArrayList<Playground> filterPlaygroundsByPrice(ArrayList<Playground>playgrounds){
         double price;
         System.out.println("Enter filter price: ");
         Scanner scanner = new Scanner(System.in);
         price= scanner.nextDouble();
         ArrayList<Playground>filterResult= new ArrayList<Playground>();
-        for (int i=0; i< database.playgrounds.size();i++){
-            if (Database.playgrounds.get(i).getPricePerHour() <= price){
-                filterResult.add(Database.playgrounds.get(i));
+        for (int i=0; i< playgrounds.size();i++){
+            if (playgrounds.get(i).getPricePerHour() <= price){
+                filterResult.add(playgrounds.get(i));
             }
         }
         scanner.close();
@@ -263,6 +264,27 @@ public class Player {
               }
           }
           this.bookings.remove(booking);
+
+    }
+    public void mainMenu(){
+        System.out.print("Hello "+ this.name+ ", please choose one of the following." );
+        System.out.print("1-view all available playgrounds.");
+        System.out.print("2-filter playgrounds.");
+        System.out.print("3-create team.");
+        System.out.print("4-update team.");
+        System.out.print("3- send invitation.");
+        System.out.print("========================================");
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+        if (choice.equalsIgnoreCase("1")){
+            viewAvailablePlaygrounds();
+        }
+        else if (choice.equalsIgnoreCase("2")){
+            filterPlaygroundsByGovernorate(Database.playgrounds);
+            filterPlaygroundsByCity();
+            filterPlaygroundsByDataAndTime();
+        }
+
 
     }
 
