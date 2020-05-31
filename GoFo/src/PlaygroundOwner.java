@@ -121,6 +121,7 @@ public class PlaygroundOwner {
            System.out.println("Enter your mobile number: ");
            Scanner scanner = new Scanner(System.in);
            this.mobile = scanner.nextInt();
+           scanner.close();
     }
     public void addPlayground(){
            Playground playground = new Playground();
@@ -154,6 +155,7 @@ public class PlaygroundOwner {
                    updatePlayground();
                }
            }
+           scanner.close();
 
     }
     public void viewBookings (){
@@ -166,6 +168,38 @@ public class PlaygroundOwner {
     }
     public  void addNotification (String notification){
            notifications.add(notification);
+    }
+    public void mainMenu(){
+           System.out.print("1-Create Profile ");
+           System.out.print("2-Add playground");
+           System.out.print("3-Update playground");
+           System.out.print("4-View Bookings");
+           System.out.print("5-check e wallet status.");
+
+           Scanner scanner = new Scanner(System.in);
+           String choice = scanner.next();
+           if (choice.equalsIgnoreCase("1")){
+               createProfile();
+               mainMenu();
+           }
+           else if (choice.equalsIgnoreCase("2")){
+               addPlayground();
+               mainMenu();
+           }
+           else if (choice.equalsIgnoreCase("3")){
+               updatePlayground();
+               mainMenu();
+           }
+           else if (choice.equalsIgnoreCase("4")){
+               viewBookings();
+               mainMenu();
+           }
+           else if (choice.equalsIgnoreCase("5")){
+               System.out.print("Your balance :" + getBalance());
+               mainMenu();
+           }
+           scanner.close();
+
     }
 
 
