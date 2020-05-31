@@ -24,7 +24,7 @@ public class Player {
             this.team=team;
             this.bookings=bookings;
             this.balance= balance;
-            database.AddPlayer(this);
+            Database.players.add(this);
 
     }
     public Player(){
@@ -60,15 +60,18 @@ public class Player {
     }
     public void createTeam(){
          team = new Team();
-         Scanner scanner = new Scanner(System.in);
          int numberOfPlayers ;
-         ArrayList<String>emails= new ArrayList<String>();
+         Scanner scanner = new Scanner(System.in);
          System.out.print("Enter number of players: ");
          numberOfPlayers = scanner.nextInt();
+         String email = scanner.next() ;
+         int index ;
          for (int i=0; i< numberOfPlayers ; i++){
-             emails.add(scanner.next());
+             System.out.print("enter player email: ");
+             index = Database.findPlayer(scanner.next());
+             team.addPlayer(Database.players.get(index));
          }
-         //team.addPlayers();
+
     }
     public void setBalance(double balance){
         this.balance= balance;
@@ -208,9 +211,9 @@ public class Player {
         System.out.println("Email: ");
         Scanner scanner = new Scanner(System.in);
         String email = scanner.nextLine();
-        Player player= Database.findPlayer(email);
-        if (player!=null){
-            player.addNotification("Your friend "+this.name+ " send you an invitation" );
+        int index = Database.findPlayer(email);
+        if (index!=-1){
+            Database.players.get(index).addNotification("Your friend "+this.name+ " send you an invitation" );
         }
     }
     public void bookPlayground (int index){
@@ -312,7 +315,19 @@ public class Player {
                 createTeam();
         }
         else if (choice.equalsIgnoreCase("4")){
-            System.out.print(this.team);
+            System.out.print("1-Add player.");
+            System.out.print("2-Remove player.");
+            choice=scanner.next();
+            if (choice.equalsIgnoreCase("1")){
+                System.out.print("Enter his email: ");
+                String email = scanner.next();
+                team.addPlayer(email);
+            }
+            else {
+                System.out.print("Enter his email: ");
+                String email = scanner.next();
+                team.removePlayer(email);
+            }
 
         }
         else if (choice.equalsIgnoreCase("5")){
