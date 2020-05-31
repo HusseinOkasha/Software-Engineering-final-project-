@@ -164,6 +164,9 @@ public class PlaygroundOwner {
                }
            }
     }
+    public  void addNotification (String notification){
+           notifications.add(notification);
+    }
 
 
 
