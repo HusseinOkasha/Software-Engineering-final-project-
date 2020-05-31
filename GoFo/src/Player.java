@@ -60,6 +60,14 @@ public class Player {
     }
     public void createTeam(){
          team = new Team();
+         Scanner scanner = new Scanner(System.in);
+         int numberOfPlayers ;
+         ArrayList<String>emails= new ArrayList<String>();
+         System.out.print("Enter number of players: ");
+         numberOfPlayers = scanner.nextInt();
+         for (int i=0; i< numberOfPlayers ; i++){
+             emails.add(scanner.next());
+         }
          //team.addPlayers();
     }
     public void setBalance(double balance){
@@ -208,6 +216,8 @@ public class Player {
     public void bookPlayground (int index){
 
         double price ;
+        String choice;
+        Scanner scanner= new Scanner(System.in);
         if (index < Database.playgrounds.size() ){
 
             for (int i=0; i< Database.playgrounds.get(index).getAvailableHours().size(); i++){
@@ -217,20 +227,26 @@ public class Player {
             bookedInterval.fill();
             price=Database.playgrounds.get(index).getPricePerHour();
             price*=bookedInterval.calculateTotalTime();
-            Booking  booking= new Booking(this,bookedInterval,price);
-            bookedInterval.setBooking(booking);
-            if (payBooking(booking)){
-                Database.playgrounds.get(index).addBooking(booking);
-                Database.playgrounds.get(index).removeInterval(bookedInterval);
-                this.bookings.add(booking);
-                System.out.print("Successful booking.");
+            System.out.print("Total price: "+price);
+            System.out.print("Do you want to book y/n .");
+            choice= scanner.next();
+            if (choice.equalsIgnoreCase("Y")){
+                Booking  booking= new Booking(this,bookedInterval,price);
+                bookedInterval.setBooking(booking);
+                if (payBooking(booking)){
+                    Database.playgrounds.get(index).addBooking(booking);
+                    Database.playgrounds.get(index).removeInterval(bookedInterval);
+                    int indexOfOwner =Database.playgroundOwners.indexOf(Database.playgrounds.get(index).getOwner());
+                    Database.playgroundOwners.get(indexOfOwner).addNotification("your playground "+
+                            Database.playgrounds.get(index).getName()+ "has been booked");
+                    this.bookings.add(booking);
+                    System.out.print("Successful booking.");
+                }
+                else{
+                    System.out.println("You don't have enough credit....");
+                }
             }
-            else{
-                System.out.println("You don't have enough credit....");
-            }
-
         }
-
     }
     public void cancelBooking (Booking booking ){
           if (booking.getFreeCancellation()==true){
@@ -270,15 +286,15 @@ public class Player {
         System.out.print("Hello "+ this.name+ ", please choose one of the following." );
         System.out.print("1-View all available playgrounds.");
         System.out.print("2-Filter playgrounds.");
-        System.out.print("3-Book playground ");
         System.out.print("3-create team.");
         System.out.print("4-update team.");
-        System.out.print("3-send invitation.");
+        System.out.print("5-send invitation.");
         System.out.print("========================================");
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.next();
         if (choice.equalsIgnoreCase("1")){
             viewAvailablePlaygrounds();
+            doYouWantToBook();
         }
         else if (choice.equalsIgnoreCase("2")){
             ArrayList<Integer>indices= new ArrayList<Integer>();
@@ -289,7 +305,18 @@ public class Player {
             for (int i=0; i<indices.size();i++){
                 System.out.print(indices.get(i)+1+" "+Database.playgrounds.get(indices.get(i)));
             }
+            doYouWantToBook();
 
+        }
+        else if (choice.equalsIgnoreCase("3")){
+                createTeam();
+        }
+        else if (choice.equalsIgnoreCase("4")){
+            System.out.print(this.team);
+
+        }
+        else if (choice.equalsIgnoreCase("5")){
+            sendInvitations();
         }
 
     }
@@ -301,12 +328,28 @@ public class Player {
         indices=filterByPrice(indices);
         return indices;
     }
+    public void doYouWantToBook(){
+        String choice;
+        Scanner scanner= new Scanner(System.in);
+        System.out.print("Do you want to book any ... ? y/n");
+        choice= scanner.next();
+        if (choice.equalsIgnoreCase("Y")){
+            int index;
+            System.out.print("Enter it's number: ");
+            index= scanner.nextInt();
+            bookPlayground(index-1);
+        }
+        scanner.close();
+    }
+
 
 
 }
 class Main{
+
+
     public static void main(String args[]){
-        Player player = new Player("Hussein Okasha" , 123 , "kk%lll" , "husseinokasha13@gmail.com",null, null,null,2000);
+
 
     }
 
