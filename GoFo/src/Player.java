@@ -248,13 +248,32 @@ public class Player {
           this.bookings.remove(booking);
 
     }
+    public ArrayList<Integer> filterByPrice(ArrayList<Integer> indices){
+        double maxPrice, minPrice;
+        ArrayList<Integer>filterResult= new ArrayList<Integer>();
+        System.out.print("Enter min price: ");
+        Scanner scanner= new Scanner(System.in);
+        minPrice=scanner.nextDouble();
+        System.out.print("Enter Max price: ");
+        maxPrice = scanner.nextDouble();
+        for (int i=0; i<indices.size(); i++){
+            if (Database.playgrounds.get(indices.get(i)).getPricePerHour()>= minPrice ){
+                if (Database.playgrounds.get(indices.get(i)).getPricePerHour()<= maxPrice ){
+                    filterResult.add(indices.get(i));
+                }
+            }
+        }
+        return filterResult;
+    }
+
     public void mainMenu(){
         System.out.print("Hello "+ this.name+ ", please choose one of the following." );
-        System.out.print("1-view all available playgrounds.");
-        System.out.print("2-filter playgrounds.");
+        System.out.print("1-View all available playgrounds.");
+        System.out.print("2-Filter playgrounds.");
+        System.out.print("3-Book playground ");
         System.out.print("3-create team.");
         System.out.print("4-update team.");
-        System.out.print("3- send invitation.");
+        System.out.print("3-send invitation.");
         System.out.print("========================================");
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.next();
@@ -266,31 +285,21 @@ public class Player {
             for (int i=0; i<Database.playgrounds.size(); i++ ){
                 indices.add(i);
             }
-            indices=filterPlaygroundsByGovernorate(indices);
-            indices=filterPlaygroundsByCity(indices);
-            indices=filterPlaygroundsByDataAndTime(indices);
+            indices=filter(indices);
             for (int i=0; i<indices.size();i++){
-                System.out.print(i+1+" "+Database.playgrounds.get(indices.get(i)));
-            }
-            System.out.print("Do you want to book one ..? y/n");
-            choice=scanner.next();
-            if (choice.equalsIgnoreCase("Y")){
-                System.out.print("enter the number of the playground: ");
-                choice=scanner.next();
-                try {
-                    int index = Integer.parseInt(choice);
-                    bookPlayground(indices.get(index-1));
-                }
-                catch (NumberFormatException e){
-                    System.out.print("Invalid choice.");
-                }
-
+                System.out.print(indices.get(i)+1+" "+Database.playgrounds.get(indices.get(i)));
             }
 
         }
 
+    }
 
-
+    public ArrayList<Integer> filter(ArrayList<Integer>indices){
+        indices=filterPlaygroundsByGovernorate(indices);
+        indices=filterPlaygroundsByCity(indices);
+        indices=filterPlaygroundsByDataAndTime(indices);
+        indices=filterByPrice(indices);
+        return indices;
     }
 
 
