@@ -40,13 +40,13 @@ public class Database {
     void removeAdministrator(Administrator administrator){
         administrators.remove(administrator);
     }
-    static Player findPlayer(String email){
+    static int  findPlayer(String email){
         for(int i=0 ; i<players.size() ; i++){
             if(players.get(i).getEmail().equalsIgnoreCase(email)){
-                return players.get(i);
+                return i;
             }
         }
-     return null;   
+     return -1;   
     }
 
 }
