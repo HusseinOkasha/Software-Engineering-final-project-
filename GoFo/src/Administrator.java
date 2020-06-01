@@ -63,25 +63,25 @@ public class Administrator {
     }
 
     // methods...
-    public void approvePlayground(Playground pendingPlayground ){
-        System.out.print(pendingPlayground);
+    public void approvePlayground(int index){
+        System.out.print(pendingPlaygrounds.get(index));
         System.out.print("===================");
         System.out.print("Is ok...? y / n");
         Scanner scanner = new Scanner(System.in);
         String choice= scanner.next();
         if (choice.equalsIgnoreCase("Y")){
-            pendingPlayground.setApproved(true);
+            pendingPlaygrounds.get(index).setApproved(true);
         }
         else {
-            pendingPlayground.setApproved(false);
+            pendingPlaygrounds.get(index).setApproved(false);
         }
-
+        scanner.close();
     }
-    public void suspendPlayground(Playground playground ){
-        playground.setSuspended(true);
+    public void suspendPlayground(int index ){
+        Database.playgrounds.get(index).setSuspended(true);
     }
-    public void activatePlayground(Playground playground){
-        playground.setSuspended(false);
+    public void activatePlayground(int index){
+        Database.playgrounds.get(index).setSuspended(false);
     }
     public void deletePlayground(){
         for (int i=0; i<Database.playgrounds.size();i++){
@@ -108,6 +108,83 @@ public class Administrator {
             }
         }
         scanner.close();
+    }
+    public void mainMenu(){
+        System.out.print("1-Approve playground ");
+        System.out.print("2-Suspend playground ");
+        System.out.print("3-Delete playground ");
+        System.out.print("4-Activate playground ");
+
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+        if (choice.equalsIgnoreCase("1")){
+            System.out.print("pending playgrounds: ");
+            for (int i=0; i<pendingPlaygrounds.size();i++){
+                System.out.print( i+1+ "- " +pendingPlaygrounds.get(i));
+            }
+            System.out.print("select one to approve");
+            choice= scanner.next();
+            try{
+                int index = Integer.parseInt(choice);
+                if (index<0 || index>=pendingPlaygrounds.size() ){
+                    throw new NumberFormatException();
+                }
+                else {
+                    approvePlayground(index-1);
+                }
+            }
+            catch (NumberFormatException e){
+                System.out.print("invalid choice...");
+            }
+            scanner.close();
+            mainMenu();
+        }
+        else if(choice.equalsIgnoreCase("2")){
+                System.out.print("Playgrounds:");
+                for (int i=0; i<Database.playgrounds.size();i++){
+                    System.out.print( i+1+" -"+ Database.playgrounds.get(i));
+                }
+                System.out.print("=============================");
+                System.out.print("choose one: ");
+                choice=scanner.next();
+                try{
+                    int index = Integer.parseInt(choice);
+                    if (index<0 || index>=Database.playgrounds.size() ){
+                        throw new NumberFormatException();
+                    }
+                    else {
+                        suspendPlayground(index-1);
+                    }
+                }
+                catch (NumberFormatException e){
+                    System.out.print("invalid choice...");
+                }
+        }
+        else if(choice.equalsIgnoreCase("3")){
+                deletePlayground();
+        }
+        else if(choice.equalsIgnoreCase("4")){
+                System.out.print("Playgrounds:");
+                for (int i=0; i<Database.playgrounds.size();i++){
+                    System.out.print( i+1+" -"+ Database.playgrounds.get(i));
+                }
+                System.out.print("=============================");
+                System.out.print("choose one: ");
+                choice=scanner.next();
+                try{
+                    int index = Integer.parseInt(choice);
+                    if (index<0 || index>=Database.playgrounds.size() ){
+                        throw new NumberFormatException();
+                    }
+                    else {
+                         activatePlayground(index-1);
+                    }
+                }
+                catch (NumberFormatException e){
+                    System.out.print("invalid choice...");
+                }
+        }
+
     }
 
 }
