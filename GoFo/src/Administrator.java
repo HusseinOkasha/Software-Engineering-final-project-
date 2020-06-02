@@ -71,6 +71,8 @@ public class Administrator {
         String choice= scanner.next();
         if (choice.equalsIgnoreCase("Y")){
             pendingPlaygrounds.get(index).setApproved(true);
+            Database.playgrounds.add(pendingPlaygrounds.get(index));
+            pendingPlaygrounds.remove(index);
         }
         else {
             pendingPlaygrounds.get(index).setApproved(false);
