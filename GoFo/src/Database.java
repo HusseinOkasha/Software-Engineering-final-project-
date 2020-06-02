@@ -48,6 +48,18 @@ public class Database {
         }
      return -1;
     }
+    static void updateDatabase(){
+        for (int i=0; i<Database.playgroundOwners.size();i++ ){
+            ArrayList<Playground>updatedPlaygrounds= new ArrayList<Playground>();
+            for (int j=0; j<Database.playgrounds.size();j++){
+                if (playgrounds.get(j).getOwner()==playgroundOwners.get(i)){
+                    updatedPlaygrounds.add(playgrounds.get(j));
+                }
+            }
+            playgroundOwners.get(i).setPlaygrounds(updatedPlaygrounds);
+        }
+
+    }
 
 }
 
