@@ -7,8 +7,8 @@ public class Administrator {
     private int ID;
     private String password;
     private String email;
-    private static ArrayList<String>notifications=null;
-    private static ArrayList<Playground>pendingPlaygrounds=null;
+    public static ArrayList<String>notifications=null;
+    public static ArrayList<Playground>pendingPlaygrounds=null;
 
     // constructors
     public Administrator() {
@@ -72,6 +72,9 @@ public class Administrator {
         if (choice.equalsIgnoreCase("Y")){
             pendingPlaygrounds.get(index).setApproved(true);
             Database.playgrounds.add(pendingPlaygrounds.get(index));
+            PlaygroundOwner owner=Database.playgrounds.get(Database.playgrounds.size()-1).getOwner();
+            int indexOfOwner =Database.playgroundOwners.indexOf(owner);
+            Database.playgroundOwners.get(indexOfOwner).refreshPlayground(pendingPlaygrounds.get(index));
             pendingPlaygrounds.remove(index);
         }
         else {
@@ -81,9 +84,15 @@ public class Administrator {
     }
     public void suspendPlayground(int index ){
         Database.playgrounds.get(index).setSuspended(true);
+        PlaygroundOwner owner =Database.playgrounds.get(index).getOwner();
+        int indexOfOwner = Database.playgroundOwners.indexOf(owner);
+        Database.playgroundOwners.get(indexOfOwner).refreshPlayground(Database.playgrounds.get(index));
     }
     public void activatePlayground(int index){
         Database.playgrounds.get(index).setSuspended(false);
+        PlaygroundOwner owner =Database.playgrounds.get(index).getOwner();
+        int indexOfOwner = Database.playgroundOwners.indexOf(owner);
+        Database.playgroundOwners.get(indexOfOwner).refreshPlayground(Database.playgrounds.get(index));
     }
     public void deletePlayground(){
         for (int i=0; i<Database.playgrounds.size();i++){
@@ -99,7 +108,10 @@ public class Administrator {
                 throw  new NumberFormatException();
             }
             else {
+                PlaygroundOwner owner =Database.playgrounds.get(index).getOwner();
+                int indexOfOwner = Database.playgroundOwners.indexOf(owner);
                 Database.playgrounds.remove(index);
+                Database.playgroundOwners.get(indexOfOwner).deletePlayground(Database.playgrounds.get(index).getName());
             }
         }
         catch (NumberFormatException e){

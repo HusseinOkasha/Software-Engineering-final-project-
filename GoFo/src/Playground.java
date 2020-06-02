@@ -236,7 +236,7 @@ public class Playground {
         for (int i=0; i<numberOfIntervals ;i++){
             System.out.print("interval number "+ i +1 );
             Interval newInterval = new Interval();
-            newInterval.fill();
+            //newInterval.fill();
             availableHours.add(newInterval);
         }
         scanner.close();

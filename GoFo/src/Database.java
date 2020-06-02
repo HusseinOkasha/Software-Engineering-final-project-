@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Database {
     // attributes....
-    public static  ArrayList<Player> players;
-    public static  ArrayList<Playground>playgrounds;
-    public static  ArrayList<PlaygroundOwner>playgroundOwners;
-    public static  ArrayList<Administrator>administrators;
+    public static  ArrayList<Player> players= new ArrayList<Player>();
+    public static  ArrayList<Playground>playgrounds= new ArrayList<Playground>();
+    public static  ArrayList<PlaygroundOwner>playgroundOwners = new ArrayList<PlaygroundOwner>();
+    public static  ArrayList<Administrator>administrators = new ArrayList<Administrator>();
     // methods...
     public Database (){
         players= new ArrayList<Player>();
@@ -48,18 +48,7 @@ public class Database {
         }
      return -1;
     }
-    static void updateDatabase(){
-        for (int i=0; i<Database.playgroundOwners.size();i++ ){
-            ArrayList<Playground>updatedPlaygrounds= new ArrayList<Playground>();
-            for (int j=0; j<Database.playgrounds.size();j++){
-                if (playgrounds.get(j).getOwner()==playgroundOwners.get(i)){
-                    updatedPlaygrounds.add(playgrounds.get(j));
-                }
-            }
-            playgroundOwners.get(i).setPlaygrounds(updatedPlaygrounds);
-        }
 
-    }
 
 }
 

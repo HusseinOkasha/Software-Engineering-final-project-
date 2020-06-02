@@ -1,5 +1,4 @@
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -69,7 +68,7 @@ public class Player {
          for (int i=0; i< numberOfPlayers ; i++){
              System.out.print("enter player email: ");
              index = Database.findPlayer(scanner.next());
-             team.addPlayer(Database.players.get(index));
+             //team.addPlayer(Database.players.get(index));
          }
 
     }
@@ -200,10 +199,12 @@ public class Player {
         return filterResult;
     }
     public boolean payBooking(Booking booking){
-            if (balance >= booking.getPrice()){
+         /*   if (balance >= booking.getPrice()){
                 balance-= booking.getPrice();
                 return true;
             }
+
+          */
             return false;
 
     }
@@ -215,7 +216,7 @@ public class Player {
         if (index!=-1){
             Database.players.get(index).addNotification("Your friend "+this.name+ " send you an invitation" );
         }
-    }
+    }/*
     public void bookPlayground (int index){
 
         double price ;
@@ -242,6 +243,7 @@ public class Player {
                     int indexOfOwner =Database.playgroundOwners.indexOf(Database.playgrounds.get(index).getOwner());
                     Database.playgroundOwners.get(indexOfOwner).addNotification("your playground "+
                             Database.playgrounds.get(index).getName()+ "has been booked");
+                    Database.playgroundOwners.get(indexOfOwner).refreshPlayground(Database.playgrounds.get(index));
                     this.bookings.add(booking);
                     System.out.print("Successful booking.");
                 }
@@ -262,11 +264,14 @@ public class Player {
               if (Database.playgrounds.get(i)== booking.getBookedPlayground()){
                   Database.playgrounds.get(i).addAvailableInterval(booking.getBookedInterval());
                   Database.playgrounds.get(i).removeBooking(booking);
+                  PlaygroundOwner owner = Database.playgrounds.get(i).getOwner();
+                  int indexOfOwner = Database.playgroundOwners.indexOf(owner);
+                  Database.playgroundOwners.get(indexOfOwner).refreshPlayground(Database.playgrounds.get(i));
               }
           }
           this.bookings.remove(booking);
 
-    }
+    }*/
     public ArrayList<Integer> filterByPrice(ArrayList<Integer> indices){
         double maxPrice, minPrice;
         ArrayList<Integer>filterResult= new ArrayList<Integer>();
@@ -321,12 +326,12 @@ public class Player {
             if (choice.equalsIgnoreCase("1")){
                 System.out.print("Enter his email: ");
                 String email = scanner.next();
-                team.addPlayer(email);
+               // team.addPlayer(email);
             }
             else {
                 System.out.print("Enter his email: ");
                 String email = scanner.next();
-                team.removePlayer(email);
+              //  team.removePlayer(email);
             }
 
         }
@@ -352,20 +357,11 @@ public class Player {
             int index;
             System.out.print("Enter it's number: ");
             index= scanner.nextInt();
-            bookPlayground(index-1);
+            //bookPlayground(index-1);
         }
         scanner.close();
     }
 
 
-
-}
-class Main{
-
-
-    public static void main(String args[]){
-
-
-    }
 
 }

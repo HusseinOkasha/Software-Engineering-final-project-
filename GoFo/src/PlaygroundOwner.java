@@ -128,7 +128,7 @@ public class PlaygroundOwner {
            playground.fill();
            playground.setApproved(false);
            this.playgrounds.add(playground);
-           Database.pendingPlaygrounds.add(playground);
+           Administrator.pendingPlaygrounds.add(playground);
 
     }
     public void updatePlayground(){
@@ -165,6 +165,22 @@ public class PlaygroundOwner {
                    System.out.print(bookings.get(j));
                }
            }
+    }
+    public void refreshPlayground( Playground updatedPlayground ){
+           for (int i=0; i<playgrounds.size() ;i++){
+               if (playgrounds.get(i).getName()== updatedPlayground.getName()){
+                   playgrounds.set(i,updatedPlayground) ;
+               }
+
+           }
+
+    }
+    public void deletePlayground(String name ){
+            for (int i=0; i<playgrounds.size(); i++){
+                if (playgrounds.get(i).getName() == name){
+                    playgrounds.remove(i);
+                }
+            }
     }
     public  void addNotification (String notification){
            notifications.add(notification);
