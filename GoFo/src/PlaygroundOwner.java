@@ -1,5 +1,7 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class PlaygroundOwner {
     // Attributes...
@@ -115,13 +117,20 @@ public class PlaygroundOwner {
     }
 
     // methods
-    public  void createProfile(){
+    public  void createProfile() {
            this.location= new Address();
            location.createAddress();
            System.out.println("Enter your mobile number: ");
-           Scanner scanner = new Scanner(System.in);
-           this.mobile = scanner.nextInt();
-           scanner.close();
+           BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            this.mobile = reader.read();
+            reader.readLine();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     public void addPlayground(){
            Playground playground = new Playground();
@@ -137,25 +146,32 @@ public class PlaygroundOwner {
            }
            System.out.println("=============================================");
            System.out.println("enter the number of the playground you want to edit ");
-           Scanner scanner = new Scanner(System.in);
-           String choice = scanner.nextLine();
-           try {
-               int index = Integer.parseInt(choice);
-               if (index < 0 || index >= playgrounds.size() ){
-                   throw  new NumberFormatException ();
+           BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
+           try{
+               String choice = reader.readLine();
+               try {
+                   int index = Integer.parseInt(choice);
+                   if (index < 0 || index >= playgrounds.size() ){
+                       throw  new NumberFormatException ();
+                   }
+                   else{
+                       playgrounds.get(index).fill();
+                   }
                }
-               else{
-                   playgrounds.get(index).fill();
+               catch (NumberFormatException e){
+                   System.out.println("Invalid choice press y to retry");
+                   choice= reader.readLine();
+                   if (choice.equalsIgnoreCase("Y")){
+                       updatePlayground();
+                   }
                }
+
            }
-           catch (NumberFormatException e){
-               System.out.println("Invalid choice press y to retry");
-               choice= scanner.next();
-               if (choice.equalsIgnoreCase("Y")){
-                   updatePlayground();
-               }
+           catch (IOException e){
+               System.out.println("Invalid input..");
            }
-           scanner.close();
+
+
 
     }
     public void viewBookings (){
@@ -186,35 +202,41 @@ public class PlaygroundOwner {
            notifications.add(notification);
     }
     public void mainMenu(){
-           System.out.print("1-Create Profile ");
-           System.out.print("2-Add playground");
-           System.out.print("3-Update playground");
-           System.out.print("4-View Bookings");
-           System.out.print("5-check e wallet status.");
+           System.out.println("1-Create Profile ");
+           System.out.println("2-Add playground");
+           System.out.println("3-Update playground");
+           System.out.println("4-View Bookings");
+           System.out.println("5-check e wallet status.");
+           BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
 
-           Scanner scanner = new Scanner(System.in);
-           String choice = scanner.next();
-           if (choice.equalsIgnoreCase("1")){
-               createProfile();
-               mainMenu();
+           try {
+               String choice = reader.readLine();
+               if (choice.equalsIgnoreCase("1")){
+                   createProfile();
+                   mainMenu();
+               }
+               else if (choice.equalsIgnoreCase("2")){
+                   addPlayground();
+                   mainMenu();
+               }
+               else if (choice.equalsIgnoreCase("3")){
+                   updatePlayground();
+                   mainMenu();
+               }
+               else if (choice.equalsIgnoreCase("4")){
+                   viewBookings();
+                   mainMenu();
+               }
+               else if (choice.equalsIgnoreCase("5")){
+                   System.out.print("Your balance :" + getBalance());
+                   mainMenu();
+               }
            }
-           else if (choice.equalsIgnoreCase("2")){
-               addPlayground();
-               mainMenu();
+           catch (IOException e){
+                    System.out.println("Invalid input ");
            }
-           else if (choice.equalsIgnoreCase("3")){
-               updatePlayground();
-               mainMenu();
-           }
-           else if (choice.equalsIgnoreCase("4")){
-               viewBookings();
-               mainMenu();
-           }
-           else if (choice.equalsIgnoreCase("5")){
-               System.out.print("Your balance :" + getBalance());
-               mainMenu();
-           }
-           scanner.close();
+
+
 
     }
 

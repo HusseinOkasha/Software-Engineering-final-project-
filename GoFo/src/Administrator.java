@@ -1,5 +1,7 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Administrator {
     // Attributes
@@ -67,20 +69,26 @@ public class Administrator {
         System.out.print(pendingPlaygrounds.get(index));
         System.out.print("===================");
         System.out.print("Is ok...? y / n");
-        Scanner scanner = new Scanner(System.in);
-        String choice= scanner.next();
-        if (choice.equalsIgnoreCase("Y")){
-            pendingPlaygrounds.get(index).setApproved(true);
-            Database.playgrounds.add(pendingPlaygrounds.get(index));
-            PlaygroundOwner owner=Database.playgrounds.get(Database.playgrounds.size()-1).getOwner();
-            int indexOfOwner =Database.playgroundOwners.indexOf(owner);
-            Database.playgroundOwners.get(indexOfOwner).refreshPlayground(pendingPlaygrounds.get(index));
-            pendingPlaygrounds.remove(index);
+        BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String choice= reader.readLine();
+            if (choice.equalsIgnoreCase("Y")){
+                pendingPlaygrounds.get(index).setApproved(true);
+                Database.playgrounds.add(pendingPlaygrounds.get(index));
+                PlaygroundOwner owner=Database.playgrounds.get(Database.playgrounds.size()-1).getOwner();
+                int indexOfOwner =Database.playgroundOwners.indexOf(owner);
+                Database.playgroundOwners.get(indexOfOwner).refreshPlayground(pendingPlaygrounds.get(index));
+                pendingPlaygrounds.remove(index);
+            }
+            else {
+                pendingPlaygrounds.get(index).setApproved(false);
+            }
+
         }
-        else {
-            pendingPlaygrounds.get(index).setApproved(false);
+        catch (IOException e){
+            System.out.println("Invalid input ");
         }
-        scanner.close();
+
     }
     public void suspendPlayground(int index ){
         Database.playgrounds.get(index).setSuspended(true);
@@ -100,28 +108,34 @@ public class Administrator {
         }
         System.out.print("=============================================================");
         System.out.print("enter number of the playground you want to delete");
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.next();
-        try{
-            int index = Integer.parseInt(choice);
-            if (index<0 && index >= Database.playgrounds.size()){
-                throw  new NumberFormatException();
+        BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String choice = reader.readLine();
+            try{
+                int index = Integer.parseInt(choice);
+                if (index<0 && index >= Database.playgrounds.size()){
+                    throw  new NumberFormatException();
+                }
+                else {
+                    PlaygroundOwner owner =Database.playgrounds.get(index).getOwner();
+                    int indexOfOwner = Database.playgroundOwners.indexOf(owner);
+                    Database.playgrounds.remove(index);
+                    Database.playgroundOwners.get(indexOfOwner).deletePlayground(Database.playgrounds.get(index).getName());
+                }
             }
-            else {
-                PlaygroundOwner owner =Database.playgrounds.get(index).getOwner();
-                int indexOfOwner = Database.playgroundOwners.indexOf(owner);
-                Database.playgrounds.remove(index);
-                Database.playgroundOwners.get(indexOfOwner).deletePlayground(Database.playgrounds.get(index).getName());
+            catch (NumberFormatException e){
+                System.out.print("Invalid choice enter y to retry");
+                choice=reader.readLine();
+                if (choice.equalsIgnoreCase("Y")){
+                    deletePlayground();
+                }
             }
+
         }
-        catch (NumberFormatException e){
-            System.out.print("Invalid choice enter y to retry");
-            choice=scanner.next();
-            if (choice.equalsIgnoreCase("Y")){
-                deletePlayground();
-            }
+        catch (IOException e){
+            System.out.println("Invalid input ");
         }
-        scanner.close();
+
     }
     public void mainMenu(){
         System.out.print("1-Approve playground ");
@@ -129,38 +143,39 @@ public class Administrator {
         System.out.print("3-Delete playground ");
         System.out.print("4-Activate playground ");
 
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.next();
-        if (choice.equalsIgnoreCase("1")){
-            System.out.print("pending playgrounds: ");
-            for (int i=0; i<pendingPlaygrounds.size();i++){
-                System.out.print( i+1+ "- " +pendingPlaygrounds.get(i));
-            }
-            System.out.print("select one to approve");
-            choice= scanner.next();
-            try{
-                int index = Integer.parseInt(choice);
-                if (index<0 || index>=pendingPlaygrounds.size() ){
-                    throw new NumberFormatException();
+        BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String choice = reader.readLine();
+            if (choice.equalsIgnoreCase("1")){
+                System.out.print("pending playgrounds: ");
+                for (int i=0; i<pendingPlaygrounds.size();i++){
+                    System.out.print( i+1+ "- " +pendingPlaygrounds.get(i));
                 }
-                else {
-                    approvePlayground(index-1);
+                System.out.print("select one to approve");
+                choice= reader.readLine();
+                try{
+                    int index = Integer.parseInt(choice);
+                    if (index<0 || index>=pendingPlaygrounds.size() ){
+                        throw new NumberFormatException();
+                    }
+                    else {
+                        approvePlayground(index-1);
+                    }
                 }
+                catch (NumberFormatException e){
+                    System.out.print("invalid choice...");
+                }
+
+                mainMenu();
             }
-            catch (NumberFormatException e){
-                System.out.print("invalid choice...");
-            }
-            scanner.close();
-            mainMenu();
-        }
-        else if(choice.equalsIgnoreCase("2")){
+            else if(choice.equalsIgnoreCase("2")){
                 System.out.print("Playgrounds:");
                 for (int i=0; i<Database.playgrounds.size();i++){
                     System.out.print( i+1+" -"+ Database.playgrounds.get(i));
                 }
                 System.out.print("=============================");
                 System.out.print("choose one: ");
-                choice=scanner.next();
+                choice=reader.readLine();
                 try{
                     int index = Integer.parseInt(choice);
                     if (index<0 || index>=Database.playgrounds.size() ){
@@ -173,30 +188,35 @@ public class Administrator {
                 catch (NumberFormatException e){
                     System.out.print("invalid choice...");
                 }
-        }
-        else if(choice.equalsIgnoreCase("3")){
+            }
+            else if(choice.equalsIgnoreCase("3")){
                 deletePlayground();
-        }
-        else if(choice.equalsIgnoreCase("4")){
+            }
+            else if(choice.equalsIgnoreCase("4")){
                 System.out.print("Playgrounds:");
                 for (int i=0; i<Database.playgrounds.size();i++){
                     System.out.print( i+1+" -"+ Database.playgrounds.get(i));
                 }
                 System.out.print("=============================");
                 System.out.print("choose one: ");
-                choice=scanner.next();
+                choice=reader.readLine();
                 try{
                     int index = Integer.parseInt(choice);
                     if (index<0 || index>=Database.playgrounds.size() ){
                         throw new NumberFormatException();
                     }
                     else {
-                         activatePlayground(index-1);
+                        activatePlayground(index-1);
                     }
                 }
                 catch (NumberFormatException e){
                     System.out.print("invalid choice...");
                 }
+            }
+
+        }
+        catch (IOException e){
+            System.out.println("Invalid input");
         }
 
     }
