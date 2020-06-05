@@ -1,17 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 public class Login {
 
 
     // methods
-    boolean loginAsPlayer() {
-        System.out.print("====================================\n");
-        System.out.println("Login:");
+    void loginAsPlayer() {
+        System.out.println("Player login:");
+        System.out.println("========================================================");
         System.out.print("Enter the email: " );
         boolean found=false;
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
@@ -35,14 +31,15 @@ public class Login {
              loginAsPlayer();
         }
 
+        Welcome welcome = new Welcome();
+        welcome.chooseRole();
 
-
-        return false;
     }
 
     public void  loginAsPlaygroundOwner() {
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("login with your owner account" ) ;
+        System.out.println("Owner login: " ) ;
+        System.out.println("========================================================");
         try {
             System.out.print("enter the email: ");
             String email = null;
@@ -56,6 +53,7 @@ public class Login {
                 }
 
             }
+
         }
 
         catch(IOException e){
@@ -63,11 +61,16 @@ public class Login {
             Welcome welcome = new Welcome();
             welcome.chooseRole();
         }
+        Welcome welcome = new Welcome();
+        welcome.chooseRole();
+
 
     }
     void  loginAsAdminstartor() {
+        System.out.println("Admin login:");
+        System.out.println("========================================================");
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("login with your administrator account" ) ;
+
         try {
             System.out.print("enter the email: ");
             String email = null;
@@ -86,13 +89,17 @@ public class Login {
             Welcome welcome = new Welcome();
             welcome.chooseRole();
         }
+        Welcome welcome = new Welcome();
+        welcome.chooseRole();
     }
     void chooseRole(){
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("1-Login As player\n");
-        System.out.print("2-Login As playgroundOwner\n");
-        System.out.print("3-Login As Administrator\n");
+        System.out.println("1-Login As player.");
+        System.out.println("2-Login As playgroundOwner.");
+        System.out.println("3-Login As Administrator.");
+        System.out.println("========================================================");
         System.out.print("enter your role: ");
+
         try{
             String role = reader.readLine();
             if(role.equalsIgnoreCase("1")){

@@ -41,11 +41,11 @@ public class Playground {
         this.bookingNumber=0;
         this.pricePerHour=0;
         this.link="";
-        this.images=null;
+        this.images=new ArrayList<String>();
         this.approved=false;
         this.suspended=true;
-        this.bookings=null;
-        this.availableHours=null;
+        this.bookings=new ArrayList<Booking>();
+        this.availableHours=new ArrayList<Interval>();
         this.owner=null;
     }
 
@@ -155,10 +155,10 @@ public class Playground {
         return false;
     }
     boolean isAvailable(){
-        if (availableHours.size()>0){
+        /*if (availableHours.size()>0){
             return true;
-        }
-        return false;
+        }*/
+        return true;
     }
     void addBooking(Booking booking){
         bookings.add(booking);
@@ -230,27 +230,32 @@ public class Playground {
             System.out.print("website Link: ");
             this.link= reader.readLine();
             System.out.print("Number of images: ");
-            int numberOfImages = reader.read();
-            reader.readLine();
-            for (int i=0; i<numberOfImages ;i++){
-                System.out.print("Image path: ");
-                this.images.add(reader.readLine());
+            try {
+                int numberOfImages = Integer.parseInt(reader.readLine());
+
+                for (int i=0; i<numberOfImages ;i++){
+                    System.out.print("Image path: ");
+                    this.images.add(reader.readLine());
+                }
+                int numberOfIntervals=0;
+                System.out.print("Number of interval you want to add");
+                numberOfIntervals= Integer.parseInt(reader.readLine());
+                /*for (int i=0; i<numberOfIntervals ;i++){
+                    System.out.print("interval number "+ i +1 );
+                    Interval newInterval = new Interval();
+                    newInterval.fill();
+                    availableHours.add(newInterval);
+                }*/
             }
-            int numberOfIntervals=0;
-            System.out.print("Number of interval you want to add");
-            numberOfIntervals= reader.read();
-            for (int i=0; i<numberOfIntervals ;i++){
-                System.out.print("interval number "+ i +1 );
-                Interval newInterval = new Interval();
-                //newInterval.fill();
-                availableHours.add(newInterval);
+            catch (NumberFormatException e){
+                System.out.println("Invalid input");
             }
+
 
         }
         catch (IOException e){
             System.out.println("Invalid input");
         }
-
 
     }
     @Override

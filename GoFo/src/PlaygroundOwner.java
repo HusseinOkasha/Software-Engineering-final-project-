@@ -33,9 +33,9 @@ public class PlaygroundOwner {
            this.name="";
            this.password="";
            this.email="";
-           this.playgrounds= null;
+           this.playgrounds= new ArrayList<Playground>();
            this.balance= 0;
-           this.notifications= null;
+           this.notifications= new ArrayList<String>();
            this.location=null;
            this.mobile= 0;
 
@@ -137,6 +137,7 @@ public class PlaygroundOwner {
            playground.fill();
            playground.setApproved(false);
            this.playgrounds.add(playground);
+           playground.setOwner(this);
            Administrator.pendingPlaygrounds.add(playground);
 
     }
@@ -207,6 +208,9 @@ public class PlaygroundOwner {
            System.out.println("3-Update playground");
            System.out.println("4-View Bookings");
            System.out.println("5-check e wallet status.");
+           System.out.println("6-Logout.");
+           System.out.println("========================================================");
+
            BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
 
            try {
