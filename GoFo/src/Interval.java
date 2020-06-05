@@ -99,14 +99,20 @@ public class Interval {
     public Booking getBooking() {
         return booking;
     }
-    public double calculateTotalTime(){
-        return 1.0;
+     public double calculateTotalTime(){
+    	double totalTimeOfMinute = endHour - startHour;
+    	totalTimeOfMinute *= 60;
+        return totalTimeOfMinute;
     }
-
-    /*
-    * Override function toString().
-    *
-    * */
+    string fill() {
+    	return (" Start hour " + startHour 
+    			+" start minute " + startMinute 
+    			+ " end Hour " + endHour 
+    			+" end minute " + endMinute 
+    			+ " day " + day
+    			+ " year " + year 
+    			+ " month " + month  )	;
+    }
 
 
 }
