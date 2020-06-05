@@ -48,9 +48,18 @@ public class Database {
         }
      return -1;
     }
+    static int  findOwner(String email) {
+        for (int i = 0; i < playgroundOwners.size(); i++) {
+            if (playgroundOwners.get(i).getEmail().equalsIgnoreCase(email)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 
-}
+
+    }
 
 
     

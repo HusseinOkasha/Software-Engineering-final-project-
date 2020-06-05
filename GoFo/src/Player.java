@@ -33,9 +33,9 @@ public class Player {
         ID=-1;
         Password=null;
         email=null;
-        notifications= null;
+        notifications= new ArrayList<String>();
         team= null;
-        bookings= null;
+        bookings= new ArrayList<Booking>();
         balance=0.0;
     }
     //setters...
@@ -251,7 +251,7 @@ public class Player {
     }
     public void bookPlayground (int index){
 
-        double price ;
+       /* double price ;
         String choice;
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -289,10 +289,10 @@ public class Player {
         catch (IOException e){
             System.out.println("Invalid input");
         }
-
+*/
     }
     public void cancelBooking (Booking booking ){
-          if (booking.getFreeCancellation()==true){
+       /*   if (booking.getFreeCancellation()==true){
               balance+=booking.getPrice();
           }
           else{
@@ -308,7 +308,7 @@ public class Player {
               }
           }
           this.bookings.remove(booking);
-
+*/
     }
     public ArrayList<Integer> filterByPrice(ArrayList<Integer> indices){
         double maxPrice, minPrice;
@@ -344,7 +344,9 @@ public class Player {
         System.out.println("3-create team.");
         System.out.println("4-update team.");
         System.out.println("5-send invitation.");
-        System.out.println("========================================");
+        System.out.println("6-Logout.");
+        System.out.println("========================================================");
+
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
         try {
             String choice = reader.readLine();
@@ -406,7 +408,7 @@ public class Player {
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Do you want to book any ... ? y/n");
         try {
-            choice= reader.readLine()
+            choice= reader.readLine();
             if (choice.equalsIgnoreCase("Y")){
                 int index;
                 System.out.print("Enter it's number: ");
@@ -421,5 +423,5 @@ public class Player {
         }
 
     }
-    
+
 }

@@ -9,8 +9,8 @@ public class Administrator {
     private int ID;
     private String password;
     private String email;
-    public static ArrayList<String>notifications=null;
-    public static ArrayList<Playground>pendingPlaygrounds=null;
+    public static ArrayList<String>notifications=new ArrayList<String>();
+    public static ArrayList<Playground>pendingPlaygrounds=new ArrayList<Playground>();
 
     // constructors
     public Administrator() {
@@ -75,8 +75,9 @@ public class Administrator {
             if (choice.equalsIgnoreCase("Y")){
                 pendingPlaygrounds.get(index).setApproved(true);
                 Database.playgrounds.add(pendingPlaygrounds.get(index));
-                PlaygroundOwner owner=Database.playgrounds.get(Database.playgrounds.size()-1).getOwner();
-                int indexOfOwner =Database.playgroundOwners.indexOf(owner);
+                String ownerEmail=pendingPlaygrounds.get(pendingPlaygrounds.size()-1).getOwner().getEmail();
+                System.out.println("Owner email: "+ ownerEmail);
+                int indexOfOwner =Database.findOwner(ownerEmail);
                 Database.playgroundOwners.get(indexOfOwner).refreshPlayground(pendingPlaygrounds.get(index));
                 pendingPlaygrounds.remove(index);
             }
@@ -138,10 +139,12 @@ public class Administrator {
 
     }
     public void mainMenu(){
-        System.out.print("1-Approve playground ");
-        System.out.print("2-Suspend playground ");
-        System.out.print("3-Delete playground ");
-        System.out.print("4-Activate playground ");
+        System.out.println("1-Approve playground.");
+        System.out.println("2-Suspend playground.");
+        System.out.println("3-Delete playground.");
+        System.out.println("4-Activate playground.");
+        System.out.println("5-Logout.");
+        System.out.println("========================================================");
 
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -155,7 +158,7 @@ public class Administrator {
                 choice= reader.readLine();
                 try{
                     int index = Integer.parseInt(choice);
-                    if (index<0 || index>=pendingPlaygrounds.size() ){
+                    if (index<0 || index>pendingPlaygrounds.size() ){
                         throw new NumberFormatException();
                     }
                     else {

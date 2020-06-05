@@ -11,11 +11,11 @@ public class Welcome {
         System.out.print("enter your choice ");
         try{
             String choice = reader.readLine();
-            if(role.equalsIgnoreCase("1")){
+            if(choice.equalsIgnoreCase("1")){
                 Register register = new Register();
                 register.chooseRole();
             }
-            else if(role.equalsIgnoreCase("2")){
+            else if(choice.equalsIgnoreCase("2")){
                 Login login = new Login();
                 login.chooseRole();
             }
@@ -30,11 +30,11 @@ public class Welcome {
         }
     }
 }
-class Main{
+/*class Main{
     public static void main(String args[]){
         Login login = new Login();
         login.chooseRole();
     }
 
 }
-
+*/
