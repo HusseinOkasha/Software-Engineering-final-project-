@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class Register {
 
 
@@ -32,7 +34,7 @@ public class Register {
             }
             System.out.print("enter the password:");
             String password = reader.readLine();
-            if(isCompleteString(name)==true ) {
+            if(isCompleteString(name)==true && isStrongPass(password)==true;) {
                 player.setPassword(password);
             }
             else{
@@ -41,7 +43,7 @@ public class Register {
             }
             System.out.print("enter the e-mail;");
             String email = reader.readLine();
-            if(isCompleteString(name)==true){
+            if(isCompleteString(name)==true && isValid(email)==true){
                 player.setEmail(email);
             }
             else{
@@ -86,7 +88,7 @@ public class Register {
             }
             System.out.print("Enter the password: ");
             String password =  reader.readLine();
-            if(isCompleteString(name)) {
+            if(isCompleteString(name) &&isStrongPass(password)==true;) {
                 owner.setPassword(password);
             }
             else{
@@ -95,7 +97,7 @@ public class Register {
             }
             System.out.print("Enter the e-mail: ");
             String email =  reader.readLine();
-            if(isCompleteString(name)){
+            if(isCompleteString(name)&&isValid(email)==true){
                 owner.setEmail(email);
             }
             else{
@@ -138,7 +140,7 @@ public class Register {
             }
             System.out.println("enter the password");
             String password = reader.readLine();
-            if(isCompleteString(password)) {
+            if(isCompleteString(password) && isStrongPass(password);) {
                 admin.setPassword(password);
             }
             else{
@@ -147,7 +149,7 @@ public class Register {
             }
             System.out.println("enter the e-mail");
             String email = reader.readLine();
-            if(isCompleteString(name)){
+            if(isCompleteString(name)&&isValid(email)==true){
                 admin.setEmail(email);
             }
             else{
@@ -175,6 +177,40 @@ public class Register {
         if(input == -1){return false;}
         else {return true;}
     }
+    boolean isStrongPass(Sring pass){
+        int check=0;
+        if(pass.length()>=8) {
+            for (int i = 0; i < pass.length(); i++) {
+                char x = pass.charAt(i);
+                if (Character.isLetter(x)){
+                    if (Character.isDigit(x))
+                        check = 1;
+                  }
+               }
+            }
+        else{
+            return false;
+        }
+            if(check==1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
     void chooseRole(){
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
         System.out.print("1-As player\n");
