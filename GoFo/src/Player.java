@@ -353,6 +353,7 @@ public class Player {
             if (choice.equalsIgnoreCase("1")){
                 viewAvailablePlaygrounds();
                 doYouWantToBook();
+                mainMenu();
             }
             else if (choice.equalsIgnoreCase("2")){
                 ArrayList<Integer>indices= new ArrayList<Integer>();
@@ -389,6 +390,7 @@ public class Player {
                 sendInvitations();
             }
 
+
         }
         catch (IOException e){
             System.out.println("Invalid input");
@@ -410,11 +412,10 @@ public class Player {
         try {
             choice= reader.readLine();
             if (choice.equalsIgnoreCase("Y")){
-                int index;
+
                 System.out.print("Enter it's number: ");
-                index= reader.read();
-                reader.readLine();
-                //bookPlayground(index-1);
+                int index= Integer.parseInt(reader.readLine());
+                bookPlayground(index-1);
             }
 
         }

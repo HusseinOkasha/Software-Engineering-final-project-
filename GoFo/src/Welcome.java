@@ -6,9 +6,9 @@ public class Welcome {
     //methods
     void chooseRole(){
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("1-For Regestration \n");
-        System.out.print("2-For Login\n");
-        System.out.print("enter your choice ");
+        System.out.println("1-For Registration.");
+        System.out.println("2-For Login.");
+        System.out.println("Enter your choice: ");
         try{
             String choice = reader.readLine();
             if(choice.equalsIgnoreCase("1")){
@@ -30,11 +30,11 @@ public class Welcome {
         }
     }
 }
-/*class Main{
+class Main{
     public static void main(String args[]){
-        Login login = new Login();
-        login.chooseRole();
+        Welcome welcome = new Welcome();
+        welcome.chooseRole();
     }
 
 }
-*/
+

@@ -7,19 +7,19 @@ public class Booking {
 	private boolean freeCancellation;
 	private Playground bookedPlayground ;
 	
-	//constractors
+	//constructors
 	public Booking() {
-		this.player="";
-		this.bookedSlot= "";
-		this.price="";
-		this.freeCancellation="";
-		this.bookedPlayground="";
+		this.player=null;
+		this.bookedSlot= new Interval();
+		this.price=0;
+		this.freeCancellation=false;
+		this.bookedPlayground=new Playground();
 	}
 	
 	public Booking(Player player, Interval bookedSlot , double price ,
 			boolean freeCancellation , Playground bookedPlayground) {
 		this.player=player;
-		this.bookedSlot=bookslot;
+		this.bookedSlot=bookedSlot;
 		this.price=price;
 		this.freeCancellation=freeCancellation;
 		this.bookedPlayground=bookedPlayground;

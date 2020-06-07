@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class Register {
 
@@ -34,7 +33,7 @@ public class Register {
             }
             System.out.print("enter the password:");
             String password = reader.readLine();
-            if(isCompleteString(name)==true && isStrongPass(password)==true;) {
+            if(isCompleteString(name) && isStrongPass(password)) {
                 player.setPassword(password);
             }
             else{
@@ -88,7 +87,7 @@ public class Register {
             }
             System.out.print("Enter the password: ");
             String password =  reader.readLine();
-            if(isCompleteString(name) &&isStrongPass(password)==true;) {
+            if(isCompleteString(name) &&isStrongPass(password)) {
                 owner.setPassword(password);
             }
             else{
@@ -97,7 +96,7 @@ public class Register {
             }
             System.out.print("Enter the e-mail: ");
             String email =  reader.readLine();
-            if(isCompleteString(name)&&isValid(email)==true){
+            if(isCompleteString(name)&&isValid(email)){
                 owner.setEmail(email);
             }
             else{
@@ -140,7 +139,7 @@ public class Register {
             }
             System.out.println("enter the password");
             String password = reader.readLine();
-            if(isCompleteString(password) && isStrongPass(password);) {
+            if(isCompleteString(password) && isStrongPass(password)) {
                 admin.setPassword(password);
             }
             else{
@@ -177,8 +176,8 @@ public class Register {
         if(input == -1){return false;}
         else {return true;}
     }
-    boolean isStrongPass(Sring pass){
-        int check=0;
+    boolean isStrongPass(String pass){
+       /* int check=0;
         if(pass.length()>=8) {
             for (int i = 0; i < pass.length(); i++) {
                 char x = pass.charAt(i);
@@ -197,7 +196,10 @@ public class Register {
             else{
                 return false;
             }
-        }
+
+        */
+        return true;
+    }
     public static boolean isValid(String email)
     {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
@@ -238,12 +240,4 @@ public class Register {
             chooseRole();
         }
     }
-}
-
-class Main{
-    public static void main(String args[]){
-        Register register = new Register();
-        register.chooseRole();
-    }
-
 }

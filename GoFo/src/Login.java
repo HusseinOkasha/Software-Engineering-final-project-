@@ -104,12 +104,15 @@ public class Login {
             String role = reader.readLine();
             if(role.equalsIgnoreCase("1")){
                 loginAsPlayer();
+                chooseRole();
             }
             else if(role.equalsIgnoreCase("2")){
                 loginAsPlaygroundOwner();
+                chooseRole();
             }
             else if(role.equalsIgnoreCase("3")){
                 loginAsAdminstartor();
+                chooseRole();
             }
             else{
                 System.out.println("invalid choice");

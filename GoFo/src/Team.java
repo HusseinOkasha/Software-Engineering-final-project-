@@ -1,2 +1,2 @@
-public class Team {
+public class  Team {
 }
