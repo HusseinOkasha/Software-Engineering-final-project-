@@ -105,8 +105,21 @@ public class Interval {
         return totalTimeOfMinute;
     }
      
-     public String fill() {
-    	 return 0;
+     public void fill() {
+    	 System.out.println("Enter start hour ");
+    	 starHour = Integer.parserINT(reader.readline());
+    	 System.out.println("Enter end hour ");
+    	 endHour= Integer.parserINT(reader.readline()); 
+    	 System.out.println("Enter start minute ");
+    	 startMinute = Integer.parserINT(reader.readline());
+    	 System.out.println("Enter end minute ");
+    	 endMinute= Integer.parserINT(reader.readline()); 
+    	 System.out.println("Enter day ");
+    	 day = Integer.parserINT(reader.readline()); 
+    	 System.out.println("Enter month ");
+    	 month = Integer.parserINT(reader.readline());
+    	 System.out.println("Enter year ");
+    	 year = Integer.parserINT(reader.readline());
      }
     public String toString() {
     	return (" Start hour " + startHour 
