@@ -104,7 +104,11 @@ public class Interval {
     	totalTimeOfMinute *= 60;
         return totalTimeOfMinute;
     }
-    String fill() {
+     
+     public String fill() {
+    	 return 0;
+     }
+    public String toString() {
     	return (" Start hour " + startHour 
     			+" start minute " + startMinute 
     			+ " end Hour " + endHour 
