@@ -28,8 +28,21 @@ public class Team {
 		
 	}
 	
-	public void sendInvitation(){
-		
-	}
+	public void sendInvitations(){
+	        System.out.println("Email: ");
+	        BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
+	        String email ;
+	        try {
+	            email= reader.readLine();
+	            int index = Database.findPlayer(email);
+	            if (index!=-1){
+	                Database.players.get(index).addNotification("Your friend "+this.name+ " send you an invitation" );
+	            }
+	        }
+	        catch (IOException e){
+	            System.out.println("invalid Input");
+	        }
+
+	    }
 	
 }
