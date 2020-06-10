@@ -107,19 +107,19 @@ public class Interval {
      
      public void fill() {
     	 System.out.println("Enter start hour ");
-    	 starHour = Integer.parserINT(reader.readline());
+    	 Scanner starHour = new Scanner(System.in);
     	 System.out.println("Enter end hour ");
-    	 endHour= Integer.parserINT(reader.readline()); 
+    	 Scanner endHour = new Scanner(System.in);
     	 System.out.println("Enter start minute ");
-    	 startMinute = Integer.parserINT(reader.readline());
+    	 Scanner startMinute = new Scanner(System.in);
     	 System.out.println("Enter end minute ");
-    	 endMinute= Integer.parserINT(reader.readline()); 
+    	 Scanner endMinute = new Scanner(System.in);
     	 System.out.println("Enter day ");
-    	 day = Integer.parserINT(reader.readline()); 
+    	 Scanner day = new Scanner(System.in);
     	 System.out.println("Enter month ");
-    	 month = Integer.parserINT(reader.readline());
+    	 Scanner month = new Scanner(System.in);
     	 System.out.println("Enter year ");
-    	 year = Integer.parserINT(reader.readline());
+    	 Scanner year = new Scanner(System.in);
      }
     public String toString() {
     	return (" Start hour " + startHour 
