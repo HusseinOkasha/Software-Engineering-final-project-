@@ -19,13 +19,12 @@ public class Team {
 	}
 	
 	//methods
-	public void addPlayer() {
-		ArrayList<Player> player = new Player();
-		
+	public void addPlayer(Player player) {
+		players.add(player);
 	}
 	
-	public void removePlayer() {
-		
+	public void removePlayer(Player player) {
+		players.remove(player);
 	}
 	
 	public void sendInvitations(){
