@@ -122,8 +122,9 @@ public class Player {
             governorate= reader.readLine();
 
             for (int i=0; i< index.size();i++){
-                if (Database.playgrounds.get(index.get(i)).getLocation().getGovernorate().equals(governorate)){
-                    filterResult.add(i);
+                if (Database.playgrounds.get(index.get(i)).getLocation().getGovernorate().equalsIgnoreCase(governorate)){
+                    System.out.println("found one of governorate: "+ governorate);
+                    filterResult.add(index.get(i));
                 }
             }
         }
@@ -144,7 +145,8 @@ public class Player {
         try {
             city = reader.readLine();
             for (int i = 0; i < index.size(); i++) {
-                if (Database.playgrounds.get(index.get(i)).getLocation().getCity().equals(city)) {
+                if (Database.playgrounds.get(index.get(i)).getLocation().getCity().equalsIgnoreCase(city)) {
+                    System.out.println("found one of city: "+ city);
                     filterResult.add(index.get(i));
                 }
             }
@@ -187,8 +189,22 @@ public class Player {
                 Interval searchInterval= new Interval(startHour,startMinute, endHour ,endMinute,day,month,year ,null);
 
                 for (int i=0; i<index.size(); i++){
-                    if (Database.playgrounds.get(index.get(i)).getAvailableHours().contains(searchInterval)){
-                        filteredPlaygrounds.add(index.get(i));
+                    ArrayList<Interval> availableHours= Database.playgrounds.get(index.get(i)).getAvailableHours();
+                    for (int j=0 ; j<availableHours.size() ;j++){
+                         if (availableHours.get(j).getStartHour() < searchInterval.getStartHour()  &&
+                                 availableHours.get(j).getEndHour() > searchInterval.getEndHour() ){
+                                 filteredPlaygrounds.add(index.get(i));
+                             System.out.println("found one ");
+                         }
+                         else if (availableHours.get(j).getStartHour() == searchInterval.getStartHour() &&
+                                 availableHours.get(j).getEndHour() == searchInterval.getEndHour() ){
+                             if (availableHours.get(j).getStartMinute()<= searchInterval.getStartMinute() &&
+                             availableHours.get(j).getEndMinute()>= searchInterval.getEndMinute()){
+                                 filteredPlaygrounds.add(index.get(i));
+                                 System.out.println("found one ");
+                             }
+                         }
+
                     }
                 }
 
@@ -201,35 +217,17 @@ public class Player {
             return filteredPlaygrounds;
 
     }
-    public ArrayList<Playground> filterPlaygroundsByPrice(ArrayList<Playground>playgrounds){
-        System.out.println("Enter filter price: ");
-        double price;
-        ArrayList<Playground>filterResult= new ArrayList<Playground>();
-        BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-        try {
-            price= reader.read();
-            reader.readLine();
-            for (int i=0; i< playgrounds.size();i++){
-                if (playgrounds.get(i).getPricePerHour() <= price){
-                    filterResult.add(playgrounds.get(i));
-                }
-            }
 
-        }
-        catch (IOException e){
-            System.out.println("Invalid Input");
-            return null;
-        }
-
-        return filterResult;
-    }
     public boolean payBooking(Booking booking){
-         /*   if (balance >= booking.getPrice()){
+            if (balance >= booking.getPrice()){
                 balance-= booking.getPrice();
+                int bookedPlaygroundIndex= booking.getBookedPlaygroundIndex();
+                String ownerEmail = Database.playgrounds.get(bookedPlaygroundIndex).getOwner().getEmail();
+                int ownerIndex= Database.findOwner(ownerEmail);
+                double currentBalance = Database.playgroundOwners.get(ownerIndex).getBalance();
+                Database.playgroundOwners.get(ownerIndex).setBalance(currentBalance+booking.getPrice());
                 return true;
             }
-
-          */
             return false;
 
     }
@@ -251,7 +249,7 @@ public class Player {
     }
     public void bookPlayground (int index){
 
-       /* double price ;
+       double price ;
         String choice;
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -263,12 +261,13 @@ public class Player {
                 Interval bookedInterval= new Interval();
                 bookedInterval.fill();
                 price=Database.playgrounds.get(index).getPricePerHour();
-                price*=bookedInterval.calculateTotalTime();
+                price*=bookedInterval.calculateTotalTime()/60;
                 System.out.print("Total price: "+price);
                 System.out.print("Do you want to book y/n .");
                 choice= reader.readLine();
                 if (choice.equalsIgnoreCase("Y")){
-                    Booking  booking= new Booking(this,bookedInterval,price);
+                    int PlayerIndex = Database.findPlayer(this.email);
+                    Booking  booking= new Booking(PlayerIndex , bookedInterval , price ,true , index );
                     bookedInterval.setBooking(booking);
                     if (payBooking(booking)){
                         Database.playgrounds.get(index).addBooking(booking);
@@ -289,26 +288,21 @@ public class Player {
         catch (IOException e){
             System.out.println("Invalid input");
         }
-*/
+
     }
     public void cancelBooking (Booking booking ){
-       /*   if (booking.getFreeCancellation()==true){
+          if (booking.isFreeCancellation()==true){
               balance+=booking.getPrice();
           }
           else{
               System.out.println("the free cancellation period has been passed so you can't take back your money");
           }
-          for (int i=0;i<Database.playgrounds.size() ;i++){
-              if (Database.playgrounds.get(i)== booking.getBookedPlayground()){
-                  Database.playgrounds.get(i).addAvailableInterval(booking.getBookedInterval());
-                  Database.playgrounds.get(i).removeBooking(booking);
-                  PlaygroundOwner owner = Database.playgrounds.get(i).getOwner();
-                  int indexOfOwner = Database.playgroundOwners.indexOf(owner);
-                  Database.playgroundOwners.get(indexOfOwner).refreshPlayground(Database.playgrounds.get(i));
-              }
-          }
+
+          Database.playgrounds.get(booking.getBookedPlaygroundIndex()).addAvailableInterval(booking.getBookedSlot());
+          Database.playgrounds.get(booking.getBookedPlaygroundIndex()).removeBooking(booking);
+          int ownerIndex=Database.findOwner(Database.playgrounds.get(booking.getBookedPlaygroundIndex()).getOwner().getEmail());
+          Database.playgroundOwners.get(ownerIndex).refreshPlayground(Database.playgrounds.get(booking.getBookedPlaygroundIndex()));
           this.bookings.remove(booking);
-*/
     }
     public ArrayList<Integer> filterByPrice(ArrayList<Integer> indices){
         double maxPrice, minPrice;
@@ -344,7 +338,8 @@ public class Player {
         System.out.println("3-create team.");
         System.out.println("4-update team.");
         System.out.println("5-send invitation.");
-        System.out.println("6-Logout.");
+        System.out.println("6-deposit credit");
+        System.out.println("7-Logout.");
         System.out.println("========================================================");
 
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
@@ -377,20 +372,24 @@ public class Player {
                 if (choice.equalsIgnoreCase("1")){
                     System.out.print("Enter his email: ");
                     String email = reader.readLine();
-                    // team.addPlayer(email);
+                    team.addPlayer(email);
                 }
                 else {
                     System.out.print("Enter his email: ");
                     String email = reader.readLine();
-                    //  team.removePlayer(email);
+                    team.removePlayer(email);
                 }
 
             }
             else if (choice.equalsIgnoreCase("5")){
                 sendInvitations();
             }
-
-
+            else if(choice.equalsIgnoreCase("6")){
+                System.out.print("deposit amount: ");
+                double amount = Double.parseDouble(reader.readLine());
+                setBalance(this.balance+amount);
+            }
+            
         }
         catch (IOException e){
             System.out.println("Invalid input");

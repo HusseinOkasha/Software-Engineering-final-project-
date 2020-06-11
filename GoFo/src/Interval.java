@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Interval {
 
     // Attributes....
@@ -100,35 +104,41 @@ public class Interval {
         return booking;
     }
      public double calculateTotalTime(){
-    	double totalTimeOfMinute = endHour - startHour;
-    	totalTimeOfMinute *= 60;
+    	double totalTimeOfMinute = (endHour*60+endMinute) - (startHour*60+startMinute);
         return totalTimeOfMinute;
     }
      
      public void fill() {
-    	 System.out.println("Enter start hour ");
-    	 Scanner starHour = new Scanner(System.in);
-    	 System.out.println("Enter end hour ");
-    	 Scanner endHour = new Scanner(System.in);
-    	 System.out.println("Enter start minute ");
-    	 Scanner startMinute = new Scanner(System.in);
-    	 System.out.println("Enter end minute ");
-    	 Scanner endMinute = new Scanner(System.in);
-    	 System.out.println("Enter day ");
-    	 Scanner day = new Scanner(System.in);
-    	 System.out.println("Enter month ");
-    	 Scanner month = new Scanner(System.in);
-    	 System.out.println("Enter year ");
-    	 Scanner year = new Scanner(System.in);
+         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
+         try{
+             System.out.println("Enter start hour ");
+             startHour= Integer.parseInt(reader.readLine());
+             System.out.println("Enter end hour ");
+             endHour = Integer.parseInt(reader.readLine());
+             System.out.println("Enter start minute ");
+             startMinute = Integer.parseInt(reader.readLine());
+             System.out.println("Enter end minute ");
+             endMinute = Integer.parseInt(reader.readLine());
+             System.out.println("Enter day ");
+             day = Integer.parseInt(reader.readLine());
+             System.out.println("Enter month ");
+             month = Integer.parseInt(reader.readLine());
+             System.out.println("Enter year ");
+             year = Integer.parseInt(reader.readLine());
+         }
+         catch (IOException e){
+             System.out.println("Invalid input.");
+         }
+
      }
-    public String toString() {
-    	return (" Start hour " + startHour 
-    			+" start minute " + startMinute 
-    			+ " end Hour " + endHour 
-    			+" end minute " + endMinute 
-    			+ " day " + day
-    			+ " year " + year 
-    			+ " month " + month  )	;
+     public String toString() {
+    	return ("Start hour " + startHour +"\n"
+    			+ "start minute " + startMinute +"\n"
+    			+ "end Hour " + endHour +"\n"
+    			+ "end minute " + endMinute +"\n"
+    			+ "day " + day +"\n"
+    			+ "year " + year +"\n"
+    			+ "month " + month +"\n" )	;
     }
 
 

@@ -66,6 +66,10 @@ public class Administrator {
 
     // methods...
     public void approvePlayground(int index){
+        if (!(pendingPlaygrounds.size() >0)){
+            System.out.println("There is no pending playgrounds");
+            return;
+        }
         System.out.print(pendingPlaygrounds.get(index));
         System.out.print("===================");
         System.out.print("Is ok...? y / n");
@@ -76,7 +80,6 @@ public class Administrator {
                 pendingPlaygrounds.get(index).setApproved(true);
                 Database.playgrounds.add(pendingPlaygrounds.get(index));
                 String ownerEmail=pendingPlaygrounds.get(pendingPlaygrounds.size()-1).getOwner().getEmail();
-                System.out.println("Owner email: "+ ownerEmail);
                 int indexOfOwner =Database.findOwner(ownerEmail);
                 Database.playgroundOwners.get(indexOfOwner).refreshPlayground(pendingPlaygrounds.get(index));
                 pendingPlaygrounds.remove(index);
@@ -98,6 +101,7 @@ public class Administrator {
         Database.playgroundOwners.get(indexOfOwner).refreshPlayground(Database.playgrounds.get(index));
     }
     public void activatePlayground(int index){
+
         Database.playgrounds.get(index).setSuspended(false);
         PlaygroundOwner owner =Database.playgrounds.get(index).getOwner();
         int indexOfOwner = Database.playgroundOwners.indexOf(owner);
@@ -114,7 +118,7 @@ public class Administrator {
             String choice = reader.readLine();
             try{
                 int index = Integer.parseInt(choice);
-                if (index<0 && index >= Database.playgrounds.size()){
+                if (index<0 || index >= Database.playgrounds.size()){
                     throw  new NumberFormatException();
                 }
                 else {

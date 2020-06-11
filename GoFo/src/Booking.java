@@ -1,34 +1,35 @@
 public class Booking {
 	
 	//attribute
-	private Player player;
+	private int  playerIndex;// index of player in Database
 	private Interval bookedSlot;
 	private double price;
 	private boolean freeCancellation;
-	private Playground bookedPlayground ;
+	private int bookedPlaygroundIndex ;// index of the booked playground in database.
 	
 	//constructors
 	public Booking() {
-		this.player=null;
+		this.playerIndex=-1;
 		this.bookedSlot= new Interval();
 		this.price=0;
 		this.freeCancellation=false;
-		this.bookedPlayground=new Playground();
+		this.bookedPlaygroundIndex=-1;
 	}
 	
-	public Booking(Player player, Interval bookedSlot , double price ,
-			boolean freeCancellation , Playground bookedPlayground) {
-		this.player=player;
+	public Booking(int  playerIndex, Interval bookedSlot , double price ,
+			boolean freeCancellation , int bookedPlaygroundIndex) {
+		this.playerIndex=playerIndex;
 		this.bookedSlot=bookedSlot;
 		this.price=price;
 		this.freeCancellation=freeCancellation;
-		this.bookedPlayground=bookedPlayground;
+		this.bookedPlaygroundIndex=bookedPlaygroundIndex
+		;
 	}
 	
 	//methods
 	//setter
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setPlayerIndex(int playerIndex) {
+		this.playerIndex = playerIndex;
 	}
 	public void setBookedSlot(Interval bookedSlot) {
 		this.bookedSlot = bookedSlot;
@@ -36,11 +37,18 @@ public class Booking {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-	
+
+	public void setBookedPlaygroundIndex(int bookedPlaygroundIndex) {
+		this.bookedPlaygroundIndex = bookedPlaygroundIndex;
+	}
+
+	public void setFreeCancellation(boolean freeCancellation) {
+		this.freeCancellation = freeCancellation;
+	}
+
 	//getter
-	public Player getPlayer() {
-		return player;
+	public int getPlayerIndex() {
+		return playerIndex;
 	}
 	public Interval getBookedSlot() {
 		return bookedSlot;
@@ -48,6 +56,12 @@ public class Booking {
 	public double getPrice() {
 		return price;
 	}
-	
-	
+
+	public int getBookedPlaygroundIndex() {
+		return bookedPlaygroundIndex;
+	}
+
+	public boolean isFreeCancellation() {
+		return freeCancellation;
+	}
 }

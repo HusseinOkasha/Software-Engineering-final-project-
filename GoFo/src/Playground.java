@@ -241,7 +241,7 @@ public class Playground {
                 System.out.print("Number of interval you want to add");
                 numberOfIntervals= Integer.parseInt(reader.readLine());
                 for (int i=0; i<numberOfIntervals ;i++){
-                    System.out.print("interval number "+ i +1 );
+                    System.out.println("interval "+ i +1 + ": ");
                     Interval newInterval = new Interval();
                     newInterval.fill();
                     availableHours.add(newInterval);
@@ -260,15 +260,15 @@ public class Playground {
     }
     @Override
     public String toString() {
-        return "Playground{" +
-                "name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                ", description='" + description + '\'' +
-                ", bookingNumber=" + bookingNumber +
-                ", pricePerHour=" + pricePerHour +
-                ", link='" + link + '\'' +
-                ", images=" + images +
-                ", availableHours=" + availableHours +
-                '}';
+        return
+                "name='" + name + '\n' +
+                "location='" + location + '\n' +
+                "description='" + description + '\n' +
+                "bookingNumber=" + bookingNumber +'\n'+
+                "pricePerHour=" + pricePerHour +'\n'+
+                "link='" + link + '\'' + '\n'+
+                "images=" + images + '\n' +
+                "availableHours=" + availableHours + '\n'+
+                "============================================================\n";
     }
 }
