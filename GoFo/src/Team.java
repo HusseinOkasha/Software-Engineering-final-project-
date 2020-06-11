@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class Team {
@@ -13,7 +12,7 @@ public class Team {
 		this.teamCreator = null ;
 	}
 	
-	public Team(ArrayList<player> players , Player teamCreator) {
+	public Team(ArrayList<Player> players , Player teamCreator) {
 		this.players = players;
 		this.teamCreator = teamCreator;
 	}
@@ -28,20 +27,10 @@ public class Team {
 	}
 	
 	public void sendInvitations(){
-	        System.out.println("Email: ");
-	        BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-	        String email ;
-	        try {
-	            email= reader.readLine();
-	            int index = Database.findPlayer(email);
-	            if (index!=-1){
-	                Database.players.get(index).addNotification("Your friend "+this.name+ " send you an invitation" );
-	            }
-	        }
-	        catch (IOException e){
-	            System.out.println("invalid Input");
-	        }
-
+	        int index ; // index of this player in the database.
+	        for (int i=0; i< players.size() ;i++ ){
+	        	index = Database.findPlayer(players.get(i).getEmail());
+	        	Database.players.get(i).addNotification("Hey "+ players.get(i).getName()+" I am"+teamCreator.getName()+ " inviting you" );
+			}
 	    }
-	
 }
