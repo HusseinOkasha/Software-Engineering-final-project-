@@ -111,19 +111,25 @@ public class Interval {
      public void fill() {
          BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
          try{
-             System.out.println("Enter start hour ");
+             System.out.print("Enter start hour: ");
              startHour= Integer.parseInt(reader.readLine());
-             System.out.println("Enter end hour ");
+
+             System.out.print("Enter end hour: ");
              endHour = Integer.parseInt(reader.readLine());
-             System.out.println("Enter start minute ");
+
+             System.out.print("Enter start minute: ");
              startMinute = Integer.parseInt(reader.readLine());
-             System.out.println("Enter end minute ");
+
+             System.out.print("Enter end minute: ");
              endMinute = Integer.parseInt(reader.readLine());
-             System.out.println("Enter day ");
+
+             System.out.print("Enter day: ");
              day = Integer.parseInt(reader.readLine());
-             System.out.println("Enter month ");
+
+             System.out.print("Enter month: ");
              month = Integer.parseInt(reader.readLine());
-             System.out.println("Enter year ");
+
+             System.out.print("Enter year: ");
              year = Integer.parseInt(reader.readLine());
          }
          catch (IOException e){

@@ -64,4 +64,13 @@ public class Booking {
 	public boolean isFreeCancellation() {
 		return freeCancellation;
 	}
+
+	@Override
+	public String toString() {
+		return "===============================================" +
+				"BookedSlot: " + bookedSlot +"\n"+
+				"Price:" + price +"\n"+
+				"FreeCancellation=" + freeCancellation +"\n"
+				+"===============================================" + "\n";
+	}
 }

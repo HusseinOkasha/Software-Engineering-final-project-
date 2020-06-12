@@ -152,7 +152,7 @@ public class PlaygroundOwner {
                String choice = reader.readLine();
                try {
                    int index = Integer.parseInt(choice);
-                   if (index < 0 || index >= playgrounds.size() ){
+                   if (index < 1 || index > playgrounds.size() ){
                        throw  new NumberFormatException ();
                    }
                    else{

@@ -177,28 +177,29 @@ public class Register {
         else {return true;}
     }
     boolean isStrongPass(String pass){
-       /* int check=0;
+        boolean isUpper=false;
+        boolean isLower= false;
+        boolean isDigit=false;
         if(pass.length()>=8) {
             for (int i = 0; i < pass.length(); i++) {
-                char x = pass.charAt(i);
-                if (Character.isLetter(x)){
-                    if (Character.isDigit(x))
-                        check = 1;
-                  }
-               }
+                if (Character.isLetter(pass.charAt(i))){
+                    if (Character.isUpperCase(pass.charAt(i))){
+                        isUpper=true;
+                    }
+                    else {
+                        isLower=true;
+                    }
+                }
+                else if(Character.isDigit(pass.charAt(i))){
+                    isDigit=true;
+                }
             }
-        else{
-            return false;
         }
-            if(check==1){
-                return true;
-            }
-            else{
-                return false;
-            }
+        if (isDigit && isUpper && isLower){
+            return true;
+        }
+        return false;
 
-        */
-        return true;
     }
     public static boolean isValid(String email)
     {

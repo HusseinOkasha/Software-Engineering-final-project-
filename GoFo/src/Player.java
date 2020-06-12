@@ -123,7 +123,7 @@ public class Player {
 
             for (int i=0; i< index.size();i++){
                 if (Database.playgrounds.get(index.get(i)).getLocation().getGovernorate().equalsIgnoreCase(governorate)){
-                    System.out.println("found one of governorate: "+ governorate);
+
                     filterResult.add(index.get(i));
                 }
             }
@@ -146,7 +146,6 @@ public class Player {
             city = reader.readLine();
             for (int i = 0; i < index.size(); i++) {
                 if (Database.playgrounds.get(index.get(i)).getLocation().getCity().equalsIgnoreCase(city)) {
-                    System.out.println("found one of city: "+ city);
                     filterResult.add(index.get(i));
                 }
             }
@@ -159,60 +158,49 @@ public class Player {
         return filterResult;
     }
 
-    public  ArrayList<Integer> filterPlaygroundsByDataAndTime(ArrayList<Integer>index){
-            int day, month ,year , startHour , startMinute , startSecond ;
-            int endHour , endMinute , endSecond;
-            ArrayList<Integer>filteredPlaygrounds = new ArrayList<Integer>();
-            BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-            try {
-                System.out.println("Enter day: ");
-                day =reader.read();
-                reader.readLine();
-                System.out.println("Enter month: ");
-                month =reader.read();
-                reader.readLine();
-                System.out.println("Enter year: ");
-                year =reader.read();
-                reader.readLine();
-                System.out.println("Enter start hour: ");
-                startHour=reader.read();
-                reader.readLine();
-                System.out.println("Enter start minute: ");
-                startMinute= reader.read();
-                reader.readLine();
-                System.out.println("Enter end hour: ");
-                endHour=reader.read();
-                reader.readLine();
-                System.out.println("Enter end minute: ");
-                endMinute= reader.read();
-                reader.readLine();
-                Interval searchInterval= new Interval(startHour,startMinute, endHour ,endMinute,day,month,year ,null);
+    public ArrayList<Integer> filterPlaygroundsByDataAndTime(ArrayList<Integer>index){
 
-                for (int i=0; i<index.size(); i++){
-                    ArrayList<Interval> availableHours= Database.playgrounds.get(index.get(i)).getAvailableHours();
+            ArrayList<Integer>filteredPlaygrounds = new ArrayList<Integer>();
+
+            Interval searchInterval= new Interval();
+            searchInterval.fill();
+            for (int i=0; i<index.size(); i++){
+                ArrayList<Interval> availableHours= Database.playgrounds.get(index.get(i)).getAvailableHours();
+                if (searchInterval.getDay()==availableHours.get(i).getDay() && searchInterval.getMonth()==availableHours.get(i).getMonth()
+                && searchInterval.getYear()==availableHours.get(i).getYear()){
                     for (int j=0 ; j<availableHours.size() ;j++){
-                         if (availableHours.get(j).getStartHour() < searchInterval.getStartHour()  &&
-                                 availableHours.get(j).getEndHour() > searchInterval.getEndHour() ){
-                                 filteredPlaygrounds.add(index.get(i));
-                             System.out.println("found one ");
-                         }
-                         else if (availableHours.get(j).getStartHour() == searchInterval.getStartHour() &&
-                                 availableHours.get(j).getEndHour() == searchInterval.getEndHour() ){
-                             if (availableHours.get(j).getStartMinute()<= searchInterval.getStartMinute() &&
-                             availableHours.get(j).getEndMinute()>= searchInterval.getEndMinute()){
-                                 filteredPlaygrounds.add(index.get(i));
-                                 System.out.println("found one ");
-                             }
-                         }
+                        if (availableHours.get(j).getStartHour() < searchInterval.getStartHour()  &&
+                                availableHours.get(j).getEndHour() > searchInterval.getEndHour() ){
+                            filteredPlaygrounds.add(index.get(i));
+
+                        }
+                        else if (availableHours.get(j).getStartHour() == searchInterval.getStartHour() &&
+                                availableHours.get(j).getEndHour() == searchInterval.getEndHour() ){
+                            if (availableHours.get(j).getStartMinute()<= searchInterval.getStartMinute() &&
+                                    availableHours.get(j).getEndMinute()>= searchInterval.getEndMinute()){
+                                filteredPlaygrounds.add(index.get(i));
+
+                            }
+                        }
+                        else if (availableHours.get(j).getStartHour() <= searchInterval.getStartHour() &&
+                                availableHours.get(j).getEndHour() > searchInterval.getEndHour()){
+                            if (availableHours.get(i).getStartMinute()<= searchInterval.getStartMinute()){
+                                filteredPlaygrounds.add(index.get(i));
+                            }
+                        }
+                        else if (availableHours.get(j).getStartHour() < searchInterval.getStartHour() &&
+                                availableHours.get(j).getEndHour() >= searchInterval.getEndHour()){
+                            if (availableHours.get(i).getEndMinute()>= searchInterval.getEndMinute()){
+                                filteredPlaygrounds.add(index.get(i));
+                            }
+                        }
 
                     }
                 }
 
             }
-            catch (IOException e){
-                System.out.println("Invalid Input");
-                return null;
-            }
+
+
 
             return filteredPlaygrounds;
 
@@ -291,7 +279,7 @@ public class Player {
 
     }
     public void cancelBooking (Booking booking ){
-          if (booking.isFreeCancellation()==true){
+          if (booking.isFreeCancellation()){
               balance+=booking.getPrice();
           }
           else{
@@ -339,7 +327,9 @@ public class Player {
         System.out.println("4-update team.");
         System.out.println("5-send invitation.");
         System.out.println("6-deposit credit");
-        System.out.println("7-Logout.");
+        System.out.println("7-Cancel booking ");
+        System.out.println("8-check e wallet status");
+        System.out.println("9-Logout.");
         System.out.println("========================================================");
 
         BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
@@ -360,10 +350,12 @@ public class Player {
                     System.out.print(indices.get(i)+1+" "+Database.playgrounds.get(indices.get(i)));
                 }
                 doYouWantToBook();
+                mainMenu();
 
             }
             else if (choice.equalsIgnoreCase("3")){
                 createTeam();
+                mainMenu();
             }
             else if (choice.equalsIgnoreCase("4")){
                 System.out.print("1-Add player.");
@@ -379,15 +371,42 @@ public class Player {
                     String email = reader.readLine();
                     team.removePlayer(email);
                 }
-
+                mainMenu();
             }
             else if (choice.equalsIgnoreCase("5")){
                 sendInvitations();
+                mainMenu();
             }
             else if(choice.equalsIgnoreCase("6")){
                 System.out.print("deposit amount: ");
                 double amount = Double.parseDouble(reader.readLine());
                 setBalance(this.balance+amount);
+                mainMenu();
+            }
+            else if (choice.equalsIgnoreCase("7")){
+                   if (!(bookings.size()>0)){
+                       System.out.println("You dan't have any bookings...");
+                   }
+                   else {
+                       for(int i=0; i< bookings.size(); i++){
+                           System.out.println(i+1+"- "+bookings.get(i));
+                       }
+                       System.out.print("select one to cancel: ");
+                       int index = Integer.parseInt(reader.readLine());
+                       if (index > bookings.size()  || index < 0){
+                           System.out.println("invalid choice ");
+
+                       }
+                       else {
+                           cancelBooking(bookings.get(index-1));
+                       }
+
+                   }
+                   mainMenu();
+            }
+            else if (choice.equalsIgnoreCase("8")){
+                   System.out.println("Your balance: "+ getBalance());
+                   mainMenu();
             }
             
         }
@@ -424,4 +443,23 @@ public class Player {
 
     }
 
+}
+class Test {
+    public static  void main (String[] args ){
+        Playground playground_1 = new Playground();
+        Playground playground_2 = new Playground();
+        playground_1.fill();
+        playground_2.fill();
+        Database.playgrounds.add(playground_1);
+        Database.playgrounds.add(playground_2);
+        Player player = new Player();
+        player.setBalance(1000);
+        player.viewAvailablePlaygrounds();
+        ArrayList<Integer>indcies= new ArrayList<Integer>();
+        for (int i=0; i< Database.playgrounds.size();i++){
+            indcies.add(i);
+        }
+        player.filterPlaygroundsByDataAndTime(indcies);
+
+    }
 }
