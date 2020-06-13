@@ -14,7 +14,7 @@ public class Player {
     private Team team ;
     private ArrayList<Booking> bookings;
     private double balance;
-    private Database database; // new attribute.....
+
     //methods..
     public Player (String name , int ID , String password , String email , ArrayList<String>notifications , Team team , ArrayList<Booking> bookings, double balance ){
             this.name=name;
@@ -66,11 +66,10 @@ public class Player {
          System.out.print("Enter number of players: ");
          numberOfPlayers = scanner.nextInt();
          String email = scanner.next() ;
-         int index ;
+
          for (int i=0; i< numberOfPlayers ; i++){
              System.out.print("enter player email: ");
-             index = Database.findPlayer(scanner.next());
-             //team.addPlayer(Database.players.get(index));
+             team.addPlayer(email);
          }
 
     }
@@ -105,7 +104,7 @@ public class Player {
     }
 
     public void viewAvailablePlaygrounds(){
-        for (int i=0; i< database.playgrounds.size();i++){
+        for (int i=0; i< Database.playgrounds.size();i++){
             if (Database.playgrounds.get(i).isAvailable()){
                     System.out.println( i+1 +" "+Database.playgrounds.get(i));
             }

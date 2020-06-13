@@ -155,9 +155,9 @@ public class Playground {
         return false;
     }
     boolean isAvailable(){
-        /*if (availableHours.size()>0){
+        if (availableHours.size()>0){
             return true;
-        }*/
+        }
         return true;
     }
     void addBooking(Booking booking){
